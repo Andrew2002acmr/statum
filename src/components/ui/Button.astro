@@ -1,0 +1,40 @@
+---
+export interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "ghost";
+  type?: "button" | "submit" | "reset";
+  className?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  type = "button",
+  className = "",
+} = Astro.props as Props;
+
+const baseClass =
+  "inline-flex min-h-11 items-center justify-center rounded-[var(--radius-sm)] px-5 py-3 text-sm font-semibold transition";
+
+const variants = {
+  primary:
+    "bg-[rgb(var(--color-accent))] text-white hover:bg-[rgb(var(--color-accent-strong))]",
+  secondary:
+    "border border-[rgb(var(--color-border))] bg-[rgb(var(--color-surface))] text-[rgb(var(--color-text))] hover:border-[rgb(var(--color-accent))] hover:text-[rgb(var(--color-accent-strong))]",
+  ghost: "text-[rgb(var(--color-text))] hover:bg-black/5",
+};
+
+const classes = `${baseClass} ${variants[variant]} ${className}`;
+---
+
+{
+  href ? (
+    <a class={classes} href={href}>
+      <slot />
+    </a>
+  ) : (
+    <button class={classes} type={type}>
+      <slot />
+    </button>
+  )
+}

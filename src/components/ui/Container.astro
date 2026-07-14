@@ -1,0 +1,14 @@
+---
+export interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  className?: string;
+}
+
+const { as: Tag = "div", className = "" } = Astro.props as Props;
+---
+
+<Tag
+  class={`mx-auto w-full max-w-[var(--container-max)] px-[var(--container-padding)] ${className}`}
+>
+  <slot />
+</Tag>
