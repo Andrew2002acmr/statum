@@ -4,6 +4,8 @@ dist/
 .agents/
 docs/
 AGENTS.md
+*.md
+!README.md
 .env
 .env.*
 !.env.example
