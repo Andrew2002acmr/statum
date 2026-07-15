@@ -1,0 +1,53 @@
+---
+import { statistics } from "../../data/statistics";
+import Container from "../ui/Container.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+---
+
+<section
+  aria-labelledby="statistics-title"
+  class="border-b border-white/10 bg-[rgb(var(--color-surface-dark))] text-white"
+  id="statistics"
+>
+  <Container>
+    <div class="py-[var(--section-space-md)]">
+      <div
+        class="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)] lg:items-end"
+      >
+        <SectionHeading
+          eyebrow="Показатели"
+          title="Цифры появятся после подтверждения"
+          description="Блок подготовлен под будущие значения, но не переносит неподтверждённые годы, проценты, гарантии и количество проектов из JPG."
+          theme="dark"
+          id="statistics-title"
+        />
+
+        <div
+          class="grid overflow-hidden rounded-[var(--radius-md)] border border-white/10 bg-white/[0.035] sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {
+            statistics.map((item) => (
+              <article
+                class="min-w-0 border-b border-white/10 p-6 last:border-b-0 sm:border-r sm:[&:nth-child(2n)]:border-r-0 sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:[&:nth-child(2n)]:border-r lg:last:border-r-0"
+                data-statistic-item
+              >
+                <p
+                  aria-label="Значение требует подтверждения"
+                  class="text-5xl font-black leading-none text-[rgb(var(--color-accent))]"
+                >
+                  {item.value}
+                </p>
+                <h3 class="mt-4 text-lg font-black uppercase leading-tight">
+                  {item.label}
+                </h3>
+                <p class="mt-3 text-sm leading-6 text-white/64">
+                  {item.description}
+                </p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

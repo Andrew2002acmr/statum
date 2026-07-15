@@ -1,0 +1,60 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import { projects } from "../../data/projects";
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import ProjectCard from "../ui/ProjectCard.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+const placeholderClasses = [
+  "bg-[linear-gradient(135deg,rgb(17_19_21_/_0.12),rgb(255_255_255_/_0.84)_44%,rgb(var(--color-accent)_/_0.18))]",
+  "bg-[linear-gradient(135deg,rgb(var(--color-accent)_/_0.16),rgb(255_255_255_/_0.82)_48%,rgb(17_19_21_/_0.08))]",
+  "bg-[linear-gradient(145deg,rgb(17_19_21_/_0.1),rgb(247_246_243)_52%,rgb(var(--color-border)))]",
+  "bg-[linear-gradient(135deg,rgb(255_255_255_/_0.86),rgb(var(--color-accent)_/_0.12)_52%,rgb(17_19_21_/_0.1))]",
+  "bg-[linear-gradient(145deg,rgb(var(--color-border)),rgb(255_255_255_/_0.86)_50%,rgb(var(--color-accent)_/_0.14))]",
+];
+---
+
+<section
+  aria-labelledby="projects-title"
+  class="border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg))]"
+  id="projects"
+>
+  <Container>
+    <div class="py-[var(--section-space-lg)]">
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_auto] lg:items-end">
+        <SectionHeading
+          eyebrow="Работы"
+          title="Проекты, которые покажут подход"
+          description="Пока реальные фотографии и описания не подтверждены, секция фиксирует будущую структуру портфолио без адресов, цен, сроков и других неподтверждённых фактов."
+          id="projects-title"
+        />
+        <Button
+          href="#lead-request"
+          variant="secondary"
+          className="w-full sm:w-fit lg:justify-self-end"
+        >
+          <span class="inline-flex items-center gap-2">
+            {`Обсудить похожую задачу`}
+            <ArrowRight aria-hidden="true" size={18} />
+          </span>
+        </Button>
+      </div>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-12">
+        {
+          projects.map((project, index) => (
+            <ProjectCard
+              title={project.title}
+              category={project.category}
+              imageAspectRatio={project.imageAspectRatio}
+              imageLabel={project.alt}
+              featured={project.featured}
+              placeholderClassName={placeholderClasses[index]}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</section>

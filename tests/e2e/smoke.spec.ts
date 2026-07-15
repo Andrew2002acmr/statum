@@ -52,14 +52,23 @@ for (const viewport of viewports) {
     await expect(page.locator("#process")).toBeVisible();
     await expect(page.locator("#services")).toBeVisible();
     await expect(page.locator("#benefits")).toBeVisible();
+    await expect(page.locator("#projects")).toBeVisible();
+    await expect(page.locator("#statistics")).toBeVisible();
     await expect(page.locator("[data-process-step]")).toHaveCount(5);
     await expect(page.locator("[data-service-card]")).toHaveCount(5);
     await expect(page.locator("[data-benefit-card]")).toHaveCount(5);
+    await expect(page.locator("[data-project-card]")).toHaveCount(5);
+    await expect(page.locator("[data-statistic-item]")).toHaveCount(4);
+
     if (viewport.width >= 1024) {
       await expect(
         page.getByRole("link", { name: "Услуги" }).first(),
       ).toHaveAttribute("href", "#services");
+      await expect(
+        page.getByRole("link", { name: "Работы" }).first(),
+      ).toHaveAttribute("href", "#projects");
     }
+
     await expect(
       page.getByRole("link", { name: /Получить расчёт/i }).first(),
     ).toBeVisible();
@@ -77,6 +86,11 @@ for (const viewport of viewports) {
           name: "Услуги",
         }),
       ).toHaveAttribute("href", "#services");
+      await expect(
+        page.locator("#mobile-navigation").getByRole("link", {
+          name: "Работы",
+        }),
+      ).toHaveAttribute("href", "#projects");
       await expectNoHorizontalOverflow(page);
 
       await page.keyboard.press("Escape");
@@ -137,6 +151,18 @@ for (const viewport of viewports) {
     await page.locator("#benefits").screenshot({
       path: testInfo.outputPath(
         `benefits-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    await page.locator("#projects").screenshot({
+      path: testInfo.outputPath(
+        `projects-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    await page.locator("#statistics").screenshot({
+      path: testInfo.outputPath(
+        `statistics-${viewport.width}x${viewport.height}.png`,
       ),
     });
   });
