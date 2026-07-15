@@ -1,5 +1,14 @@
 # IMPLEMENTATION-MAP
 
+## Stage 5 implementation note
+
+- Section order now includes `EstimateQuiz` after `Statistics`: `Benefits -> Projects -> Statistics -> EstimateQuiz`. `[Brief]` `[Reference]`
+- `src/components/sections/EstimateQuiz.astro` renders the estimate section, semantic quiz form, progress indicator, final non-submit state, and a decorative image placeholder. `[Technical recommendation]`
+- `src/components/ui/QuizOption.astro` renders repeated radio options so the form keeps native labels and keyboard behavior. `[Technical recommendation]`
+- `src/data/estimate-quiz.ts` stores temporary questions and options. These values are not approved business facts and remain TBD until the client confirms the estimate flow. `[Assumption/TBD]`
+- `src/scripts/estimate-quiz.ts` progressively enhances the form into a five-step quiz with preserved radio answers, back/next navigation, progress updates, and hidden serialized answers for future form integration. No data is sent to the server at this stage. `[Technical recommendation]` `[Assumption/TBD]`
+- Completion criteria for this stage: section `#estimate` is present, all five questions are reachable, required answers gate the next step, back navigation preserves choices, final state does not show a price, and Playwright confirms no console/page errors or horizontal overflow at the required viewports. `[Technical recommendation]`
+
 ## Назначение
 
 Практическая карта будущей реализации лендинга. Документ фиксирует, как требования из `SPEC.md`, ограничения из `TECH-STACK.md` и выводы из `DESIGN-AUDIT.md` будут разложены на код, компоненты, данные и проверки.

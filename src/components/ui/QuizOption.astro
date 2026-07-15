@@ -1,0 +1,52 @@
+---
+export interface Props {
+  questionId: string;
+  value: string;
+  label: string;
+  description?: string;
+  required?: boolean;
+}
+
+const { questionId, value, label, description, required = true } = Astro.props;
+const inputId = `estimate-${questionId}-${value}`;
+---
+
+<label
+  class="group block min-w-0 cursor-pointer rounded-[var(--radius-sm)] border border-white/12 bg-white/[0.035] p-4 transition hover:border-[rgb(var(--color-accent))]/70 hover:bg-white/[0.06] has-[:checked]:border-[rgb(var(--color-accent))] has-[:checked]:bg-[rgb(var(--color-accent))]/10"
+  data-quiz-option-card
+  for={inputId}
+>
+  <input
+    class="peer sr-only"
+    data-quiz-option
+    id={inputId}
+    name={questionId}
+    required={required}
+    type="radio"
+    value={value}
+  />
+  <span
+    class="flex min-w-0 items-start gap-3 rounded-[var(--radius-sm)] outline-none peer-focus-visible:outline peer-focus-visible:outline-3 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-[rgb(var(--color-accent))]"
+  >
+    <span
+      aria-hidden="true"
+      class="mt-1 size-4 shrink-0 rounded-full border border-white/35 bg-transparent p-1 transition peer-checked:border-[rgb(var(--color-accent))]"
+    >
+      <span
+        class="block size-full rounded-full bg-transparent transition group-has-[:checked]:bg-[rgb(var(--color-accent))]"
+      ></span>
+    </span>
+    <span class="min-w-0">
+      <span class="block text-base font-black leading-snug text-white">
+        {label}
+      </span>
+      {
+        description && (
+          <span class="mt-2 block text-sm leading-6 text-white/62">
+            {description}
+          </span>
+        )
+      }
+    </span>
+  </span>
+</label>
