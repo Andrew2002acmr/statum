@@ -1,0 +1,52 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import { services } from "../../data/services";
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import ServiceCard from "../ui/ServiceCard.astro";
+---
+
+<section
+  aria-labelledby="services-title"
+  class="border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg))]"
+  id="services"
+>
+  <Container>
+    <div class="py-[var(--section-space-lg)]">
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,0.82fr)_auto] lg:items-end">
+        <SectionHeading
+          eyebrow="Услуги"
+          title="Работы под разные задачи ремонта"
+          description="Временная структура помогает показать основные направления без неподтверждённых цен, сроков и фиксированного состава работ."
+          id="services-title"
+        />
+        <Button
+          href="#lead-request"
+          className="w-full sm:w-fit lg:justify-self-end"
+        >
+          <span class="inline-flex items-center gap-2">
+            {`Обсудить задачу`}
+            <ArrowRight aria-hidden="true" size={18} />
+          </span>
+        </Button>
+      </div>
+
+      <div
+        class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+      >
+        {
+          services.map((service) => (
+            <ServiceCard
+              title={service.title}
+              description={service.description}
+              imageAspectRatio={service.imageAspectRatio}
+              imageLabel={service.alt}
+              icon={service.icon}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</section>

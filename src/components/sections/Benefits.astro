@@ -1,0 +1,31 @@
+---
+import { benefits } from "../../data/benefits";
+import BenefitCard from "../ui/BenefitCard.astro";
+import Container from "../ui/Container.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+---
+
+<section
+  aria-labelledby="benefits-title"
+  class="border-b border-white/10 bg-[rgb(var(--color-surface-dark))] text-white"
+  id="benefits"
+>
+  <Container>
+    <div class="py-[var(--section-space-md)]">
+      <SectionHeading
+        eyebrow="Почему выбирают нас"
+        title="Контроль без громких обещаний"
+        description="Блок преимуществ временно фиксирует подход к работе, а не неподтверждённые цифры, гарантии или абсолютные обещания."
+        theme="dark"
+        align="center"
+        id="benefits-title"
+      />
+
+      <div
+        class="mt-10 grid overflow-hidden rounded-[var(--radius-md)] border border-white/10 bg-white/[0.03] md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+      >
+        {benefits.map((benefit) => <BenefitCard {...benefit} />)}
+      </div>
+    </div>
+  </Container>
+</section>

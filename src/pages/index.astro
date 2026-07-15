@@ -5,6 +5,8 @@ import Hero from "../components/sections/Hero.astro";
 import TrustFeatures from "../components/sections/TrustFeatures.astro";
 import About from "../components/sections/About.astro";
 import Process from "../components/sections/Process.astro";
+import Services from "../components/sections/Services.astro";
+import Benefits from "../components/sections/Benefits.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export const prerender = true;
@@ -21,12 +23,13 @@ export const prerender = true;
     <TrustFeatures />
     <About />
     <Process />
+    <Services />
+    <Benefits />
     <Container>
       <section
         aria-label="Будущие секции лендинга"
         class="grid gap-4 py-[var(--section-space-sm)] text-sm text-[rgb(var(--color-muted))]"
       >
-        <div id="services"></div>
         <div id="projects"></div>
       </section>
     </Container>
