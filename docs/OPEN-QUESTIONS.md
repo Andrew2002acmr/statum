@@ -1,5 +1,20 @@
 # OPEN-QUESTIONS
 
+## Stage 5 - estimate quiz questions
+
+### Critical before connecting the quiz to lead submission
+
+1. What exact estimate formula or decision rules should be used? Current value: `TBD`. `[Assumption/TBD]`
+2. Which quiz questions and answer options are approved by the client? Current value: `TBD`; current implementation uses temporary neutral questions. `[Assumption/TBD]`
+3. How should quiz answers be attached to the final request: email, Telegram, CRM, webhook, or another channel? Current value: `TBD`. `[Assumption/TBD]`
+4. Which contact fields and consent text must appear before sending quiz answers? Current value: `TBD`. `[Assumption/TBD]`
+5. Should the user see an estimated range, a callback promise, or only a request confirmation after real integration? Current value: `TBD`. `[Assumption/TBD]`
+
+### Can be clarified later
+
+1. Should the quiz be shortened, reordered, or split into visual steps with images after real content appears? Current value: `TBD`. `[Assumption/TBD]`
+2. Should quiz answers persist between page visits? Current value: `TBD`; Stage 5 intentionally does not use `localStorage`. `[Technical recommendation]` `[Assumption/TBD]`
+
 ## Легенда источников
 
 - `[Макет]` - непосредственно видно в `design/statum-design.jpg`.

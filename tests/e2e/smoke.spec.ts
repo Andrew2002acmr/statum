@@ -26,6 +26,19 @@ async function expectServiceCardTextFits(page: Page) {
   expect(overflowingText).toBe(false);
 }
 
+async function expectQuizProgress(page: Page, expectedValue: number) {
+  const progressValue = await page
+    .locator("[data-quiz-progress]")
+    .evaluate((node: HTMLProgressElement) => node.value);
+
+  expect(progressValue).toBe(expectedValue);
+}
+
+async function chooseQuizOption(page: Page, stepIndex: number) {
+  const step = page.locator(`[data-quiz-step-index="${stepIndex}"]`);
+  await step.locator("[data-quiz-option-card]").first().click();
+}
+
 for (const viewport of viewports) {
   test(`home page smoke ${viewport.width}x${viewport.height}`, async ({
     page,
@@ -54,11 +67,13 @@ for (const viewport of viewports) {
     await expect(page.locator("#benefits")).toBeVisible();
     await expect(page.locator("#projects")).toBeVisible();
     await expect(page.locator("#statistics")).toBeVisible();
+    await expect(page.locator("#estimate")).toBeVisible();
     await expect(page.locator("[data-process-step]")).toHaveCount(5);
     await expect(page.locator("[data-service-card]")).toHaveCount(5);
     await expect(page.locator("[data-benefit-card]")).toHaveCount(5);
     await expect(page.locator("[data-project-card]")).toHaveCount(5);
     await expect(page.locator("[data-statistic-item]")).toHaveCount(4);
+    await expect(page.locator("[data-quiz-step]")).toHaveCount(5);
 
     if (viewport.width >= 1024) {
       await expect(
@@ -163,6 +178,59 @@ for (const viewport of viewports) {
     await page.locator("#statistics").screenshot({
       path: testInfo.outputPath(
         `statistics-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    const quiz = page.locator("[data-estimate-quiz]");
+    const nextButton = quiz.locator("[data-quiz-next]");
+    const previousButton = quiz.locator("[data-quiz-prev]");
+
+    await expect(quiz).toBeVisible();
+    await expect(page.locator('[data-quiz-step-index="0"]')).toBeVisible();
+    await expectQuizProgress(page, 1);
+    await expect(nextButton).toBeDisabled();
+
+    await page.locator("#estimate").screenshot({
+      path: testInfo.outputPath(
+        `estimate-first-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    await chooseQuizOption(page, 0);
+    await expect(nextButton).toBeEnabled();
+    await nextButton.click();
+    await expect(page.locator('[data-quiz-step-index="1"]')).toBeVisible();
+    await expectQuizProgress(page, 2);
+
+    await page.locator("#estimate").screenshot({
+      path: testInfo.outputPath(
+        `estimate-middle-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    await previousButton.click();
+    await expect(page.locator('[data-quiz-step-index="0"]')).toBeVisible();
+    await expect(
+      page.locator('[data-quiz-step-index="0"] input[type="radio"]').first(),
+    ).toBeChecked();
+    await expect(nextButton).toBeEnabled();
+
+    await nextButton.click();
+
+    for (let stepIndex = 1; stepIndex < 5; stepIndex += 1) {
+      await chooseQuizOption(page, stepIndex);
+      await expect(nextButton).toBeEnabled();
+      await nextButton.click();
+    }
+
+    await expect(page.locator("[data-quiz-final]")).toBeVisible();
+    await expect(page.locator("#estimate")).not.toContainText(/\d+\s*(₽|руб)/i);
+    await expectNoHorizontalOverflow(page);
+    expect(browserErrors).toEqual([]);
+
+    await page.locator("#estimate").screenshot({
+      path: testInfo.outputPath(
+        `estimate-final-${viewport.width}x${viewport.height}.png`,
       ),
     });
   });

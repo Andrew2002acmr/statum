@@ -1,5 +1,12 @@
 # DECISIONS
 
+## 2026-07-15 - Estimate quiz without price calculation
+
+- Decision: Stage 5 adds a five-step estimate quiz as progressive enhancement with vanilla TypeScript. It collects temporary parameters but does not calculate price, request contacts, call Astro Actions, or send data to a server. `[Technical recommendation]` `[Assumption/TBD]`
+- Reason: pricing formula, lead delivery channel, contact fields, and legal consent text are still TBD, so showing a fake cost or success state would mislead users. `[Technical recommendation]` `[Assumption/TBD]`
+- Implementation: content lives in `src/data/estimate-quiz.ts`, UI in `src/components/sections/EstimateQuiz.astro`, repeated radio option markup in `src/components/ui/QuizOption.astro`, and client behavior in `src/scripts/estimate-quiz.ts`. `[Technical recommendation]`
+- Follow-up: integrate collected answers with the real contact form after the client confirms delivery channel, validation requirements, consent copy, and price-estimation rules. `[Assumption/TBD]`
+
 ## 2026-07-14 - Выбор Astro как основы лендинга
 
 Статус: принято.

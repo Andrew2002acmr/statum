@@ -1,5 +1,11 @@
 # ASSET-MANIFEST
 
+## Stage 5 additions
+
+| ID                   | Section      | Purpose                                           | Proposed file                               | Ratio | Desktop/mobile notes                                                                               | Alt/decorative                                        | Status      |
+| -------------------- | ------------ | ------------------------------------------------- | ------------------------------------------- | ----- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------- |
+| estimate-quiz-visual | EstimateQuiz | Visual support for the preliminary estimate block | `public/images/estimate/estimate-quiz.webp` | 4:3   | Desktop: placed beside the quiz card. Mobile: shown after the section heading and before the quiz. | decorative until a real informative image is approved | placeholder |
+
 ## Stage 4 additions
 
 Source: `[Макет]`, `[Предположение/TBD]`, `[Рекомендация]`.
