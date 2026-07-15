@@ -1,0 +1,66 @@
+---
+import { CircleCheck } from "@lucide/astro";
+import { about } from "../../data/about";
+import Container from "../ui/Container.astro";
+import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+---
+
+<section
+  aria-labelledby="about-title"
+  class="border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg))]"
+  id="about"
+>
+  <Container>
+    <div
+      class="grid gap-10 py-[var(--section-space-lg)] lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1fr)] lg:items-center lg:gap-16"
+    >
+      <div>
+        <SectionHeading
+          eyebrow={about.eyebrow}
+          title={about.title}
+          description={about.description}
+          id="about-title"
+        />
+
+        <div class="mt-8 grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          {
+            about.points.map((point) => (
+              <article class="flex gap-4 border-l-2 border-[rgb(var(--color-accent))] bg-[rgb(var(--color-surface))] p-5 shadow-[var(--shadow-soft)]">
+                <CircleCheck
+                  aria-hidden="true"
+                  class="mt-1 shrink-0 text-[rgb(var(--color-accent-strong))]"
+                  size={22}
+                  stroke-width={1.9}
+                />
+                <div>
+                  <h3 class="text-lg font-extrabold leading-snug text-[rgb(var(--color-text))]">
+                    {point.title}
+                  </h3>
+                  <p class="mt-2 text-sm leading-6 text-[rgb(var(--color-muted))]">
+                    {point.text}
+                  </p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="lg:order-first">
+        <div class="relative">
+          <ImagePlaceholder
+            decorative
+            ratio="4 / 3"
+            className="rounded-[var(--radius-sm)] border-solid bg-[linear-gradient(135deg,rgb(17_19_21_/_0.08),rgb(255_255_255_/_0.72)_42%,rgb(var(--color-accent)_/_0.12))] shadow-[var(--shadow-soft)]"
+          />
+          <div
+            aria-hidden="true"
+            class="absolute -bottom-5 right-5 h-20 w-1 bg-[rgb(var(--color-accent))] sm:right-8"
+          >
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
