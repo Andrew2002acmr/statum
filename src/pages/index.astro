@@ -1,5 +1,4 @@
 ---
-import Container from "../components/ui/Container.astro";
 import Header from "../components/layout/Header.astro";
 import Hero from "../components/sections/Hero.astro";
 import TrustFeatures from "../components/sections/TrustFeatures.astro";
@@ -7,6 +6,8 @@ import About from "../components/sections/About.astro";
 import Process from "../components/sections/Process.astro";
 import Services from "../components/sections/Services.astro";
 import Benefits from "../components/sections/Benefits.astro";
+import Projects from "../components/sections/Projects.astro";
+import Statistics from "../components/sections/Statistics.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export const prerender = true;
@@ -14,7 +15,7 @@ export const prerender = true;
 
 <BaseLayout
   title="СТАТУМ — ремонтные работы под контролем"
-  description="Временная верхняя часть лендинга для ремонтных работ: header, hero и ключевые преимущества."
+  description="Лендинг для ремонтных работ: понятный подход, услуги, примеры проектов и будущая заявка на расчёт."
 >
   <div id="top"></div>
   <Header />
@@ -25,13 +26,7 @@ export const prerender = true;
     <Process />
     <Services />
     <Benefits />
-    <Container>
-      <section
-        aria-label="Будущие секции лендинга"
-        class="grid gap-4 py-[var(--section-space-sm)] text-sm text-[rgb(var(--color-muted))]"
-      >
-        <div id="projects"></div>
-      </section>
-    </Container>
+    <Projects />
+    <Statistics />
   </main>
 </BaseLayout>
