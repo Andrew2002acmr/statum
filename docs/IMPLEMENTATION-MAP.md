@@ -1,5 +1,14 @@
 # IMPLEMENTATION-MAP
 
+## Stage 7 implementation note
+
+- Lead submission path: `LeadForm -> Astro Action submitLead -> Zod validation -> honeypot -> Turnstile siteverify -> in-memory rate limit -> message formatter -> Telegram Bot API sendMessage`. `[Brief]` `[Technical recommendation]`
+- `src/components/forms/LeadForm.astro` is the single reusable contact form. Stage 7 places it in the Hero form slot (`#lead-request`) and keeps other CTA links pointed to that primary form. `[Technical recommendation]`
+- Server orchestration lives in `src/actions/index.ts`; validation and quiz parsing live in `src/lib/server/lead-schema.ts`; message formatting lives in `src/lib/server/lead-message.ts`; Telegram transport lives in `src/lib/server/telegram.ts`; Turnstile verification lives in `src/lib/server/turnstile.ts`; rate limiting lives in `src/lib/server/rate-limit.ts`. `[Technical recommendation]`
+- Estimate quiz answers remain user-controlled hidden payloads, so the server validates question ids and option values against `src/data/estimate-quiz.ts` before adding human-readable labels to the Telegram message. `[Technical recommendation]`
+- The home page is no longer prerendered because the lead form now depends on Astro Actions and server-side validation. `[Technical recommendation]`
+- Automated tests use `NODE_ENV=test` and a test-only transport seam; real Telegram delivery is not exercised without local production credentials. `[Technical recommendation]`
+
 ## Stage 6 implementation note
 
 - Section order now ends with `EstimateQuiz -> Reviews -> FinalCta -> Footer`. `[Brief]` `[Reference]`

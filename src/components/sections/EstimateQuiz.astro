@@ -116,9 +116,15 @@ import SectionHeading from "../ui/SectionHeading.astro";
             <p class="mt-3 text-sm leading-6 text-white/68 sm:text-base">
               {estimateQuizContent.finalMessage}
             </p>
+            <a
+              class="mt-5 inline-flex min-h-11 items-center justify-center rounded-[var(--radius-sm)] bg-[rgb(var(--color-accent))] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[rgb(var(--color-accent-strong))]"
+              href="#lead-request"
+            >
+              {estimateQuizContent.finalCtaLabel}
+            </a>
           </div>
 
-          <!-- Integration with the contact form is intentionally deferred to a separate stage. -->
+          <!-- The lead form reads this value and sends it only after explicit contact-form submit. -->
           <input
             data-quiz-summary
             name="estimateQuizAnswers"

@@ -6,7 +6,8 @@ const npmCommand = isWindows ? "npm.cmd" : "npm";
 const playwrightCommand = isWindows
   ? "node_modules\\.bin\\playwright.cmd"
   : "node_modules/.bin/playwright";
-const previewUrl = "http://127.0.0.1:4321";
+const previewPort = process.env.PLAYWRIGHT_PREVIEW_PORT ?? "4322";
+const previewUrl = `http://127.0.0.1:${previewPort}`;
 
 function run(command, args) {
   return new Promise((resolve, reject) => {
@@ -63,12 +64,25 @@ let exitCode = 0;
 let preview;
 
 try {
+  process.env.PLAYWRIGHT_BASE_URL = previewUrl;
+
   await run(npmCommand, ["run", "build"]);
 
-  preview = spawn(npmCommand, ["run", "preview", "--", "--host", "127.0.0.1"], {
-    shell: isWindows,
-    stdio: "inherit",
-  });
+  preview = spawn(
+    npmCommand,
+    ["run", "preview", "--", "--host", "127.0.0.1", "--port", previewPort],
+    {
+      env: {
+        ...process.env,
+        NODE_ENV: "test",
+        TELEGRAM_BOT_TOKEN: "test-token",
+        TELEGRAM_CHAT_ID: "test-chat",
+        TURNSTILE_SECRET_KEY: "test-secret",
+      },
+      shell: isWindows,
+      stdio: "inherit",
+    },
+  );
 
   await waitForServer();
   await run(playwrightCommand, ["test"]);

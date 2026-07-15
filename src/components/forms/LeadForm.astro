@@ -1,0 +1,166 @@
+---
+import { TURNSTILE_SITE_KEY } from "astro:env/client";
+import { ArrowRight } from "@lucide/astro";
+
+export interface Props {
+  source: "hero" | "contact";
+  title: string;
+  description: string;
+  className?: string;
+}
+
+const { source, title, description, className = "" } = Astro.props as Props;
+const formId = `lead-form-${source}`;
+const turnstileSiteKey = TURNSTILE_SITE_KEY;
+---
+
+<form
+  class={`grid gap-3 ${className}`}
+  data-lead-form
+  data-testid="lead-form"
+  novalidate
+>
+  <div>
+    <p
+      class="text-sm font-bold uppercase tracking-[0.1em] text-[rgb(var(--color-accent))]"
+    >
+      Заявка в Telegram
+    </p>
+    <h2
+      class="mt-2 text-xl font-black uppercase leading-tight"
+      id={`${formId}-title`}
+    >
+      {title}
+    </h2>
+    <p class="mt-2 text-sm leading-6 text-white/68">
+      {description}
+    </p>
+  </div>
+
+  <div class="grid gap-2.5">
+    <div class="grid gap-2">
+      <label class="text-sm font-semibold text-white" for={`${formId}-name`}>
+        Имя
+      </label>
+      <input
+        autocomplete="name"
+        class="min-h-11 rounded-[var(--radius-sm)] border border-white/16 bg-white px-3 text-base text-[rgb(var(--color-text))] transition placeholder:text-[rgb(var(--color-muted))] focus:border-[rgb(var(--color-accent))] focus:outline-none"
+        id={`${formId}-name`}
+        maxlength="80"
+        minlength="2"
+        name="name"
+        placeholder="Как к вам обращаться"
+        required
+        type="text"
+      />
+    </div>
+
+    <div class="grid gap-2">
+      <label class="text-sm font-semibold text-white" for={`${formId}-phone`}>
+        Телефон
+      </label>
+      <input
+        autocomplete="tel"
+        class="min-h-11 rounded-[var(--radius-sm)] border border-white/16 bg-white px-3 text-base text-[rgb(var(--color-text))] transition placeholder:text-[rgb(var(--color-muted))] focus:border-[rgb(var(--color-accent))] focus:outline-none"
+        id={`${formId}-phone`}
+        maxlength="40"
+        name="phone"
+        placeholder="+7 ..."
+        required
+        type="tel"
+      />
+    </div>
+
+    <div class="grid gap-2">
+      <label class="text-sm font-semibold text-white" for={`${formId}-comment`}>
+        Комментарий
+      </label>
+      <textarea
+        class="min-h-16 resize-y rounded-[var(--radius-sm)] border border-white/16 bg-white px-3 py-3 text-base text-[rgb(var(--color-text))] transition placeholder:text-[rgb(var(--color-muted))] focus:border-[rgb(var(--color-accent))] focus:outline-none"
+        id={`${formId}-comment`}
+        maxlength="700"
+        name="comment"
+        placeholder="Коротко опишите задачу"
+        rows="2"></textarea>
+    </div>
+
+    <label class="flex gap-3 text-sm leading-5 text-white/72">
+      <input
+        class="mt-1 size-4 shrink-0 accent-[rgb(var(--color-accent))]"
+        name="consent"
+        required
+        type="checkbox"
+      />
+      <span>
+        Согласен на обработку персональных данных. Текст политики и согласия
+        требует утверждения перед production-запуском.
+      </span>
+    </label>
+  </div>
+
+  <input name="source" type="hidden" value={source} />
+  <input data-lead-quiz-input name="quizAnswers" type="hidden" value="" />
+  <input
+    data-lead-turnstile-input
+    name="turnstileToken"
+    type="hidden"
+    value=""
+  />
+
+  <div aria-hidden="true" class="hidden">
+    <label for={`${formId}-company`}>Компания</label>
+    <input
+      autocomplete="off"
+      id={`${formId}-company`}
+      name="company"
+      tabindex="-1"
+      type="text"
+    />
+  </div>
+
+  {
+    turnstileSiteKey ? (
+      <div
+        class="cf-turnstile"
+        data-sitekey={turnstileSiteKey}
+        data-theme="dark"
+      />
+    ) : (
+      <p class="text-xs leading-5 text-white/52" data-turnstile-missing>
+        Turnstile будет активирован после добавления site key в окружение.
+      </p>
+    )
+  }
+
+  <button
+    class="inline-flex min-h-11 items-center justify-center rounded-[var(--radius-sm)] bg-[rgb(var(--color-accent))] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[rgb(var(--color-accent-strong))] disabled:cursor-not-allowed disabled:opacity-60"
+    data-lead-submit
+    type="submit"
+  >
+    <span class="inline-flex items-center gap-2" data-lead-submit-label>
+      Получить расчёт
+      <ArrowRight aria-hidden="true" size={18} />
+    </span>
+  </button>
+
+  <p
+    aria-live="polite"
+    class="min-h-5 text-sm leading-5"
+    data-lead-status
+    role="status"
+  >
+  </p>
+</form>
+
+{
+  turnstileSiteKey && (
+    <script
+      async
+      defer
+      is:inline
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    />
+  )
+}
+
+<script src="../../scripts/lead-form.ts"></script>

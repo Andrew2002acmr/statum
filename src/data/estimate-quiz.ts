@@ -21,7 +21,8 @@ export const estimateQuizContent = {
   visualLabel: "Место для будущего изображения с материалами расчёта",
   finalTitle: "Параметры сохранены",
   finalMessage:
-    "Оставьте контакты на следующем этапе, чтобы получить предварительную оценку. Сейчас данные не отправляются на сервер.",
+    "Оставьте контакты в форме заявки, чтобы получить предварительную оценку. Данные отправятся только после вашего явного подтверждения.",
+  finalCtaLabel: "Перейти к форме заявки",
 } as const;
 
 // TBD: questions and options are temporary until the client confirms the final estimate flow.
