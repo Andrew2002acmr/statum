@@ -39,6 +39,17 @@ async function chooseQuizOption(page: Page, stepIndex: number) {
   await step.locator("[data-quiz-option-card]").first().click();
 }
 
+async function expectInternalLinksTargetExistingIds(page: Page) {
+  const brokenLinks = await page.locator('a[href^="#"]').evaluateAll((links) =>
+    links
+      .map((link) => link.getAttribute("href") ?? "")
+      .filter((href) => href.length > 1)
+      .filter((href) => !document.getElementById(href.slice(1))),
+  );
+
+  expect(brokenLinks).toEqual([]);
+}
+
 for (const viewport of viewports) {
   test(`home page smoke ${viewport.width}x${viewport.height}`, async ({
     page,
@@ -68,12 +79,26 @@ for (const viewport of viewports) {
     await expect(page.locator("#projects")).toBeVisible();
     await expect(page.locator("#statistics")).toBeVisible();
     await expect(page.locator("#estimate")).toBeVisible();
+    await expect(page.locator("#reviews")).toBeVisible();
+    await expect(page.locator("#contact")).toBeVisible();
+    await expect(page.locator("footer")).toBeVisible();
     await expect(page.locator("[data-process-step]")).toHaveCount(5);
     await expect(page.locator("[data-service-card]")).toHaveCount(5);
     await expect(page.locator("[data-benefit-card]")).toHaveCount(5);
     await expect(page.locator("[data-project-card]")).toHaveCount(5);
     await expect(page.locator("[data-statistic-item]")).toHaveCount(4);
     await expect(page.locator("[data-quiz-step]")).toHaveCount(5);
+    await expect(page.locator("[data-review-card]")).toHaveCount(3);
+    await expect(
+      page.locator('[data-review-status="placeholder"]'),
+    ).toHaveCount(3);
+    await expect(page.locator("[data-review-author]")).toHaveCount(0);
+    await expect(page.locator("[data-review-rating]")).toHaveCount(0);
+    await expect(
+      page.locator("footer").getByRole("navigation", {
+        name: "Навигация в подвале",
+      }),
+    ).toBeVisible();
 
     if (viewport.width >= 1024) {
       await expect(
@@ -82,6 +107,15 @@ for (const viewport of viewports) {
       await expect(
         page.getByRole("link", { name: "Работы" }).first(),
       ).toHaveAttribute("href", "#projects");
+      await expect(
+        page.getByRole("link", { name: "Оценка" }).first(),
+      ).toHaveAttribute("href", "#estimate");
+      await expect(
+        page.getByRole("link", { name: "Отзывы" }).first(),
+      ).toHaveAttribute("href", "#reviews");
+      await expect(
+        page.getByRole("link", { name: "Контакт" }).first(),
+      ).toHaveAttribute("href", "#contact");
     }
 
     await expect(
@@ -106,6 +140,21 @@ for (const viewport of viewports) {
           name: "Работы",
         }),
       ).toHaveAttribute("href", "#projects");
+      await expect(
+        page.locator("#mobile-navigation").getByRole("link", {
+          name: "Оценка",
+        }),
+      ).toHaveAttribute("href", "#estimate");
+      await expect(
+        page.locator("#mobile-navigation").getByRole("link", {
+          name: "Отзывы",
+        }),
+      ).toHaveAttribute("href", "#reviews");
+      await expect(
+        page.locator("#mobile-navigation").getByRole("link", {
+          name: "Контакт",
+        }),
+      ).toHaveAttribute("href", "#contact");
       await expectNoHorizontalOverflow(page);
 
       await page.keyboard.press("Escape");
@@ -114,6 +163,7 @@ for (const viewport of viewports) {
     }
 
     await expectNoHorizontalOverflow(page);
+    await expectInternalLinksTargetExistingIds(page);
     expect(browserErrors).toEqual([]);
 
     await page.screenshot({
@@ -233,5 +283,38 @@ for (const viewport of viewports) {
         `estimate-final-${viewport.width}x${viewport.height}.png`,
       ),
     });
+
+    await page.locator("#reviews").screenshot({
+      path: testInfo.outputPath(
+        `reviews-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    const finalCtaLink = page.locator("#contact a").first();
+    await finalCtaLink.focus();
+    await expect(finalCtaLink).toBeFocused();
+
+    await page.locator("#contact").screenshot({
+      path: testInfo.outputPath(
+        `final-cta-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    const footerNavigationLink = page.locator("footer nav a").first();
+    await footerNavigationLink.focus();
+    await expect(footerNavigationLink).toBeFocused();
+
+    await page.locator("footer").screenshot({
+      path: testInfo.outputPath(
+        `footer-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    if (viewport.width === 390) {
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await page.screenshot({
+        path: testInfo.outputPath("page-bottom-390x844.png"),
+      });
+    }
   });
 }

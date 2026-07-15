@@ -1,5 +1,21 @@
 # OPEN-QUESTIONS
 
+## Stage 6 - reviews, final CTA, and footer blockers
+
+### Critical before production launch
+
+1. Are there real client testimonials approved for publication? Current value: `TBD`; Stage 6 shows placeholders only. `[Assumption/TBD]`
+2. Which client names, project labels, ratings, or review metadata may be displayed? Current value: `TBD`. `[Assumption/TBD]`
+3. Which phone, email, messengers, region, and working hours should appear in the header/footer? Current value: `TBD`. `[Assumption/TBD]`
+4. What legal entity, requisites, privacy policy, and personal data consent text should be used? Current value: `TBD`. `[Assumption/TBD]`
+5. Which request delivery channel should be connected: email, Telegram, CRM, webhook, or another system? Current value: `TBD`. `[Assumption/TBD]`
+6. Is there an approved SVG logo and production imagery for footer/header and bottom sections? Current value: `TBD`. `[Assumption/TBD]`
+
+### Can be clarified later
+
+1. Should reviews remain a static grid or become a CSS Scroll Snap carousel after real testimonials appear? Current value: `TBD`. `[Technical recommendation]` `[Assumption/TBD]`
+2. Should the final CTA point to the quiz, a future contact form, or a modal after form integration is complete? Current value: `TBD`; Stage 6 links to `#estimate`. `[Technical recommendation]` `[Assumption/TBD]`
+
 ## Stage 5 - estimate quiz questions
 
 ### Critical before connecting the quiz to lead submission

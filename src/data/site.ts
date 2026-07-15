@@ -10,10 +10,11 @@ export const site = {
   secondaryCta: "Обсудить проект",
   nav: [
     { label: "Подход", href: "#about" },
-    { label: "Преимущества", href: "#trust" },
     { label: "Услуги", href: "#services" },
     { label: "Работы", href: "#projects" },
-    { label: "Заявка", href: "#lead-request" },
+    { label: "Оценка", href: "#estimate" },
+    { label: "Отзывы", href: "#reviews" },
+    { label: "Контакт", href: "#contact" },
   ],
   hero: {
     eyebrow: "Ремонтные работы для квартир и домов",

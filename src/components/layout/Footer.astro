@@ -1,0 +1,100 @@
+---
+import { footerContent } from "../../data/footer";
+import { site } from "../../data/site";
+import Container from "../ui/Container.astro";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-[rgb(var(--color-surface-dark))] text-white">
+  <Container>
+    <div
+      class="grid gap-10 border-b border-white/10 py-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(180px,0.55fr)_minmax(220px,0.7fr)_minmax(240px,0.75fr)]"
+    >
+      <div class="min-w-0">
+        <a
+          aria-label={`${site.companyName}: перейти к началу страницы`}
+          class="inline-flex min-w-0 items-center gap-3"
+          href="#top"
+        >
+          <span
+            aria-hidden="true"
+            class="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-sm)] border border-[rgb(var(--color-accent))] text-lg font-black text-[rgb(var(--color-accent))]"
+          >
+            С
+          </span>
+          <span class="min-w-0">
+            <span
+              class="block text-lg font-black leading-none tracking-[0.08em]"
+            >
+              {site.companyName}
+            </span>
+            <span
+              class="mt-1 block text-[0.68rem] uppercase tracking-[0.16em] text-white/55"
+            >
+              {site.brandCaption}
+            </span>
+          </span>
+        </a>
+        <p class="mt-5 max-w-sm text-sm leading-7 text-white/62">
+          {footerContent.description}
+        </p>
+      </div>
+
+      <nav aria-label="Навигация в подвале" class="min-w-0">
+        <h2 class="text-sm font-black uppercase tracking-[0.12em] text-white">
+          {footerContent.navigationTitle}
+        </h2>
+        <ul class="mt-4 grid gap-3">
+          {
+            site.nav.map((item) => (
+              <li>
+                <a
+                  class="text-sm text-white/62 transition hover:text-white"
+                  href={item.href}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <section aria-labelledby="footer-contact-title" class="min-w-0">
+        <h2
+          class="text-sm font-black uppercase tracking-[0.12em] text-white"
+          id="footer-contact-title"
+        >
+          {footerContent.contactTitle}
+        </h2>
+        <p class="mt-4 text-sm leading-7 text-white/62">
+          {footerContent.contactPlaceholder}
+        </p>
+      </section>
+
+      <section aria-labelledby="footer-legal-title" class="min-w-0">
+        <h2
+          class="text-sm font-black uppercase tracking-[0.12em] text-white"
+          id="footer-legal-title"
+        >
+          {footerContent.legalTitle}
+        </h2>
+        <p class="mt-4 text-sm leading-7 text-white/62">
+          {footerContent.legalPlaceholder}
+        </p>
+      </section>
+    </div>
+
+    <div
+      class="flex flex-col gap-3 py-6 text-sm text-white/46 md:flex-row md:items-center md:justify-between"
+    >
+      <p>
+        © {currentYear}
+        {" "}
+        {site.companyName}. {footerContent.copyrightPrefix}.
+      </p>
+      <p>Production-контакты и юридические страницы требуют согласования.</p>
+    </div>
+  </Container>
+</footer>
