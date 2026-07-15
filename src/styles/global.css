@@ -19,6 +19,7 @@
   --radius-lg: 12px;
 
   --shadow-soft: 0 18px 40px rgb(17 19 21 / 0.1);
+  --shadow-strong: 0 24px 70px rgb(0 0 0 / 0.28);
 
   --section-space-sm: clamp(2rem, 5vw, 4rem);
   --section-space-md: clamp(3rem, 7vw, 6rem);
@@ -29,7 +30,7 @@
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.5rem;
   --font-size-2xl: 2rem;
-  --font-size-3xl: 2.75rem;
+  --font-size-3xl: clamp(2.25rem, 4vw, 4.5rem);
 
   --transition-base: 180ms ease;
 }
@@ -54,6 +55,10 @@ body {
   background: rgb(var(--color-bg));
 }
 
+body:has([data-mobile-menu][data-state="open"]) {
+  overflow-x: hidden;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -69,4 +74,8 @@ a {
 
 ::selection {
   background: rgb(var(--color-accent) / 0.25);
+}
+
+[hidden] {
+  display: none !important;
 }

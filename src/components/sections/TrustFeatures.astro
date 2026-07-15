@@ -1,0 +1,53 @@
+---
+import {
+  CalendarClock,
+  ClipboardCheck,
+  MessagesSquare,
+  ShieldCheck,
+} from "@lucide/astro";
+import { site } from "../../data/site";
+import Container from "../ui/Container.astro";
+
+const icons = {
+  ShieldCheck,
+  ClipboardCheck,
+  CalendarClock,
+  MessagesSquare,
+};
+---
+
+<section
+  aria-labelledby="trust-title"
+  class="border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-surface))]"
+  id="trust"
+>
+  <Container>
+    <div class="py-6">
+      <h2 class="sr-only" id="trust-title">Ключевые преимущества подхода</h2>
+      <div
+        class="grid gap-px overflow-hidden rounded-[var(--radius-md)] border border-[rgb(var(--color-border))] bg-[rgb(var(--color-border))] md:grid-cols-2 xl:grid-cols-4"
+      >
+        {
+          site.trustFeatures.map((feature) => {
+            const Icon = icons[feature.icon];
+            return (
+              <article class="grid gap-3 bg-[rgb(var(--color-surface))] p-5 sm:grid-cols-[auto_1fr] sm:items-start">
+                <div class="grid h-11 w-11 place-items-center rounded-[var(--radius-sm)] bg-[rgb(var(--color-accent)_/_0.12)] text-[rgb(var(--color-accent-strong))]">
+                  <Icon aria-hidden="true" size={23} stroke-width={1.9} />
+                </div>
+                <div>
+                  <h3 class="text-base font-extrabold leading-snug text-[rgb(var(--color-text))]">
+                    {feature.title}
+                  </h3>
+                  <p class="mt-1 text-sm leading-6 text-[rgb(var(--color-muted))]">
+                    {feature.text}
+                  </p>
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </Container>
+</section>
