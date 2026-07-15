@@ -5,7 +5,7 @@ const MAX_MESSAGE_LENGTH = 3500;
 
 const sourceLabels: Record<NormalizedLead["source"], string> = {
   hero: "Первый экран",
-  contact: "Финальный CTA",
+  estimate: "Квиз предварительной оценки",
 };
 
 function cleanValue(value: string) {
@@ -33,7 +33,7 @@ export function formatLeadMessage(lead: NormalizedLead, date = new Date()) {
     "Новая заявка с сайта «Статум»",
     "",
     `Имя: ${cleanValue(lead.name)}`,
-    `Телефон: ${cleanValue(lead.phone)}`,
+    `Телефон: ${cleanValue(lead.phoneDisplay)}`,
   ];
 
   if (lead.comment) {

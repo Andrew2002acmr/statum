@@ -1,7 +1,11 @@
 import { z } from "zod";
 import { estimateQuizQuestions } from "../../data/estimate-quiz";
+import {
+  formatRussianPhoneFromNationalDigits,
+  normalizeRussianPhone,
+} from "../russian-phone";
 
-export const leadSources = ["hero", "contact"] as const;
+export const leadSources = ["hero", "estimate"] as const;
 
 export type LeadSource = (typeof leadSources)[number];
 
@@ -12,36 +16,116 @@ export interface QuizAnswer {
   optionLabel: string;
 }
 
-export const leadInputSchema = z.object({
-  name: z.string().trim().min(2, "Укажите имя").max(80, "Имя слишком длинное"),
-  phone: z
-    .string()
-    .trim()
-    .min(5, "Укажите телефон")
-    .max(40, "Телефон слишком длинный")
-    .refine((value) => /^[+\d][\d\s\-().]{4,39}$/.test(value), {
-      message: "Укажите корректный телефон",
-    }),
-  comment: z.string().trim().max(700, "Комментарий слишком длинный").optional(),
-  consent: z.literal("on", {
-    error: "Необходимо согласие на обработку персональных данных",
-  }),
-  source: z.enum(leadSources),
-  quizAnswers: z.string().trim().max(2000).optional(),
-  company: z.string().trim().max(0).optional(),
-  turnstileToken: z.string().trim().min(1, "Проверка Turnstile обязательна"),
-});
-
-export type LeadInput = z.infer<typeof leadInputSchema>;
-
 export interface NormalizedLead {
   name: string;
   phone: string;
+  phoneDisplay: string;
   comment?: string;
   source: LeadSource;
   pageUrl: string;
   quizAnswers: QuizAnswer[];
 }
+
+function normalizeTextWhitespace(value: string) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function getPhoneErrorMessage(value: string) {
+  const result = normalizeRussianPhone(value);
+
+  if ("canonical" in result) {
+    return null;
+  }
+
+  if (result.error === "empty") {
+    return "Укажите номер телефона";
+  }
+
+  if (result.error === "incomplete") {
+    return "Введите номер полностью: +7 и 10 цифр";
+  }
+
+  return "Проверьте номер телефона";
+}
+
+const nameSchema = z
+  .string()
+  .transform(normalizeTextWhitespace)
+  .superRefine((value, context) => {
+    if (!value) {
+      context.addIssue({ code: "custom", message: "Укажите ваше имя" });
+      return;
+    }
+
+    if (value.length < 2) {
+      context.addIssue({
+        code: "custom",
+        message: "Имя должно содержать не менее 2 символов",
+      });
+      return;
+    }
+
+    if (value.length > 60) {
+      context.addIssue({
+        code: "custom",
+        message: "Имя слишком длинное. Максимум — 60 символов",
+      });
+      return;
+    }
+
+    if (!/^[\p{L}\s'’-]+$/u.test(value) || !/\p{L}/u.test(value)) {
+      context.addIssue({
+        code: "custom",
+        message: "Используйте буквы, пробел, дефис или апостроф",
+      });
+    }
+  });
+
+const phoneSchema = z
+  .string()
+  .trim()
+  .superRefine((value, context) => {
+    const message = getPhoneErrorMessage(value);
+
+    if (message) {
+      context.addIssue({ code: "custom", message });
+    }
+  })
+  .transform((value) => {
+    const normalized = normalizeRussianPhone(value);
+    return "canonical" in normalized ? normalized.canonical : value;
+  });
+
+const commentSchema = z
+  .string()
+  .max(1000, "Комментарий слишком длинный. Максимум — 1000 символов")
+  .transform((value) => {
+    const normalized = normalizeTextWhitespace(value);
+    return normalized ? normalized : undefined;
+  })
+  .optional();
+
+const optionalFormString = z.preprocess(
+  (value) => (value === null || value === undefined ? "" : value),
+  z.string().trim(),
+);
+
+export const leadInputSchema = z
+  .object({
+    name: nameSchema,
+    phone: phoneSchema,
+    comment: commentSchema,
+    consent: z.literal("on", {
+      error: "Подтвердите согласие на обработку персональных данных",
+    }),
+    source: z.enum(leadSources),
+    quizAnswers: optionalFormString.pipe(z.string().max(2000)).optional(),
+    company: optionalFormString.pipe(z.string().max(0)).optional(),
+    turnstileToken: optionalFormString,
+  })
+  .strict();
+
+export type LeadInput = z.infer<typeof leadInputSchema>;
 
 const questionMap = new Map(
   estimateQuizQuestions.map((question) => [
@@ -101,12 +185,17 @@ export function normalizeLeadInput(
   input: LeadInput,
   pageUrl: string,
 ): NormalizedLead {
-  const comment = input.comment?.replace(/\s+/g, " ").trim();
+  const phone = normalizeRussianPhone(input.phone);
+
+  if (!("canonical" in phone)) {
+    throw new Error("INVALID_PHONE");
+  }
 
   return {
-    name: input.name.replace(/\s+/g, " ").trim(),
-    phone: input.phone.replace(/\s+/g, " ").trim(),
-    comment: comment ? comment : undefined,
+    name: input.name,
+    phone: phone.canonical,
+    phoneDisplay: formatRussianPhoneFromNationalDigits(phone.nationalDigits),
+    comment: input.comment,
     source: input.source,
     pageUrl,
     quizAnswers: parseQuizAnswersPayload(input.quizAnswers),

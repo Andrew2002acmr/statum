@@ -3,6 +3,7 @@ import { formatLeadMessage } from "../lib/server/lead-message";
 import { leadInputSchema, normalizeLeadInput } from "../lib/server/lead-schema";
 import { assertLeadRateLimit, RateLimitError } from "../lib/server/rate-limit";
 import {
+  isMockLeadDeliveryEnabled,
   sendTelegramLead,
   TelegramTransportError,
 } from "../lib/server/telegram";
@@ -59,6 +60,7 @@ export const server = {
         await verifyTurnstileToken({
           token: input.turnstileToken,
           hostname: context.url.hostname,
+          allowTestBypass: await isMockLeadDeliveryEnabled(),
         });
 
         const pageUrl =

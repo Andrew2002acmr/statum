@@ -1,5 +1,13 @@
 # DECISIONS
 
+## 2026-07-15 - Completed lead flow stays in context
+
+- Decision: after the five-step estimate quiz, the user stays inside `#estimate`; the final quiz state shows a summary of selected answers and the same reusable `LeadForm` with `source="estimate"`. `[Brief]` `[Technical recommendation]`
+- Reason: moving the user from the quiz back to the Hero form breaks context and looks like a technical jump between unrelated blocks. `[Brief]`
+- Dialogs: successful delivery and transport/server failures use a native HTML `dialog` controlled by vanilla TypeScript; success is shown only after the server Action returns success. `[Technical recommendation]`
+- Mock delivery: `LEAD_DELIVERY_MODE=mock` with `MOCK_LEAD_RESULT=success|error|timeout` is available only outside production for manual and automated checks without real Telegram credentials. Production uses only Telegram delivery. `[Technical recommendation]`
+- Validation: the reusable form uses inline client validation for UX, while the server Zod schema remains the source of truth. Current phone format is the Russian number format `+7 (999) 123-45-67`; this is a product assumption until the region/contact policy is confirmed. `[Assumption/TBD]` `[Technical recommendation]`
+
 ## 2026-07-15 - Lead submissions are delivered to Telegram
 
 - Decision: Stage 7 uses Astro Action `submitLead` as the only server entry point for lead submissions. `[Brief]` `[Technical recommendation]`

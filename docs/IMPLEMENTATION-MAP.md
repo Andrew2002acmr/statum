@@ -3,9 +3,12 @@
 ## Stage 7 implementation note
 
 - Lead submission path: `LeadForm -> Astro Action submitLead -> Zod validation -> honeypot -> Turnstile siteverify -> in-memory rate limit -> message formatter -> Telegram Bot API sendMessage`. `[Brief]` `[Technical recommendation]`
-- `src/components/forms/LeadForm.astro` is the single reusable contact form. Stage 7 places it in the Hero form slot (`#lead-request`) and keeps other CTA links pointed to that primary form. `[Technical recommendation]`
+- `src/components/forms/LeadForm.astro` is the single reusable contact form. It is rendered in the Hero form slot (`#lead-request`) with `source="hero"` and in the completed Estimate quiz state with `source="estimate"`. `[Technical recommendation]`
+- Completed quiz flow stays inside `#estimate`: `src/scripts/estimate-quiz.ts` renders a readable answer summary, preserves serialized answers in `data-quiz-summary`, and passes them to the Estimate `LeadForm` only after explicit contact-form submit. `[Brief]` `[Technical recommendation]`
+- `src/components/ui/SubmissionDialog.astro` and `src/scripts/submission-dialog.ts` handle native success/error dialogs. Form values are cleared only after a confirmed server success and closing the success dialog. `[Technical recommendation]`
 - Server orchestration lives in `src/actions/index.ts`; validation and quiz parsing live in `src/lib/server/lead-schema.ts`; message formatting lives in `src/lib/server/lead-message.ts`; Telegram transport lives in `src/lib/server/telegram.ts`; Turnstile verification lives in `src/lib/server/turnstile.ts`; rate limiting lives in `src/lib/server/rate-limit.ts`. `[Technical recommendation]`
 - Estimate quiz answers remain user-controlled hidden payloads, so the server validates question ids and option values against `src/data/estimate-quiz.ts` before adding human-readable labels to the Telegram message. `[Technical recommendation]`
+- Manual and automated local checks can use server-only mock delivery with `LEAD_DELIVERY_MODE=mock` and `MOCK_LEAD_RESULT=success|error|timeout`; production must use Telegram delivery. `[Technical recommendation]`
 - The home page is no longer prerendered because the lead form now depends on Astro Actions and server-side validation. `[Technical recommendation]`
 - Automated tests use `NODE_ENV=test` and a test-only transport seam; real Telegram delivery is not exercised without local production credentials. `[Technical recommendation]`
 

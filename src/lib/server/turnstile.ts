@@ -27,6 +27,7 @@ interface TurnstileResponse {
 interface VerifyTurnstileOptions {
   token: string;
   hostname: string;
+  allowTestBypass?: boolean;
   fetchImpl?: typeof fetch;
   timeoutMs?: number;
 }
@@ -38,9 +39,14 @@ function isAbortError(error: unknown) {
 export async function verifyTurnstileToken({
   token,
   hostname,
+  allowTestBypass = false,
   fetchImpl = fetch,
   timeoutMs = TURNSTILE_TIMEOUT_MS,
 }: VerifyTurnstileOptions): Promise<void> {
+  if (allowTestBypass && process.env.NODE_ENV !== "production") {
+    return;
+  }
+
   if (!token) {
     throw new TurnstileVerificationError(
       "Turnstile token is missing",
