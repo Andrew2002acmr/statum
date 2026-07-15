@@ -1,0 +1,25 @@
+---
+export interface Props {
+  label?: string;
+  ratio?: string;
+  decorative?: boolean;
+  className?: string;
+}
+
+const {
+  label = "Image placeholder",
+  ratio = "16 / 9",
+  decorative = false,
+  className = "",
+} = Astro.props as Props;
+---
+
+<div
+  aria-hidden={decorative ? "true" : undefined}
+  aria-label={decorative ? undefined : label}
+  class={`grid w-full place-items-center overflow-hidden rounded-[var(--radius-md)] border border-dashed border-[rgb(var(--color-border))] bg-white/60 p-4 text-center text-sm text-[rgb(var(--color-muted))] ${className}`}
+  role={decorative ? undefined : "img"}
+  style={`aspect-ratio: ${ratio};`}
+>
+  {!decorative && <span>{label}</span>}
+</div>

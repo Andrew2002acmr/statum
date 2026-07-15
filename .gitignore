@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.agents/
+docs/
+AGENTS.md
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+coverage/
+npm-debug.log*
+debug.log
+.DS_Store
+Thumbs.db
