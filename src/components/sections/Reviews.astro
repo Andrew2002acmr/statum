@@ -1,0 +1,28 @@
+---
+import { reviews, reviewsContent } from "../../data/reviews";
+import Container from "../ui/Container.astro";
+import ReviewCard from "../ui/ReviewCard.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+---
+
+<section
+  aria-labelledby="reviews-title"
+  class="border-b border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg))]"
+  id="reviews"
+>
+  <Container>
+    <div class="py-[var(--section-space-md)]">
+      <SectionHeading
+        eyebrow={reviewsContent.eyebrow}
+        title={reviewsContent.title}
+        description={reviewsContent.description}
+        align="center"
+        id="reviews-title"
+      />
+
+      <div class="mt-10 grid gap-5 md:grid-cols-3" data-testid="reviews-list">
+        {reviews.map((review) => <ReviewCard {...review} />)}
+      </div>
+    </div>
+  </Container>
+</section>

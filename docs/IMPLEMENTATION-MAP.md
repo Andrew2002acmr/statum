@@ -1,5 +1,13 @@
 # IMPLEMENTATION-MAP
 
+## Stage 6 implementation note
+
+- Section order now ends with `EstimateQuiz -> Reviews -> FinalCta -> Footer`. `[Brief]` `[Reference]`
+- `src/components/sections/Reviews.astro` renders review placeholders from `src/data/reviews.ts`; placeholder cards do not use `blockquote`, author, rating, or fictional client data. `[Technical recommendation]` `[Assumption/TBD]`
+- `src/components/sections/FinalCta.astro` renders the final CTA with `id="contact"` and links to `#estimate`, because request delivery and contact form integration remain TBD. `[Technical recommendation]` `[Assumption/TBD]`
+- `src/components/layout/Footer.astro` uses shared navigation from `src/data/site.ts` and displays non-interactive contact/legal placeholders instead of fake phone, email, social, legal, or policy links. `[Technical recommendation]` `[Assumption/TBD]`
+- Completion criteria for this stage: `#reviews`, `#contact`, and `footer` are present; all internal links target existing ids; placeholder reviews do not include fictional authors or ratings; Playwright confirms no console/page errors or horizontal overflow at the required viewports. `[Technical recommendation]`
+
 ## Stage 5 implementation note
 
 - Section order now includes `EstimateQuiz` after `Statistics`: `Benefits -> Projects -> Statistics -> EstimateQuiz`. `[Brief]` `[Reference]`

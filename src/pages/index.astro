@@ -9,6 +9,9 @@ import Benefits from "../components/sections/Benefits.astro";
 import Projects from "../components/sections/Projects.astro";
 import Statistics from "../components/sections/Statistics.astro";
 import EstimateQuiz from "../components/sections/EstimateQuiz.astro";
+import Reviews from "../components/sections/Reviews.astro";
+import FinalCta from "../components/sections/FinalCta.astro";
+import Footer from "../components/layout/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export const prerender = true;
@@ -30,5 +33,8 @@ export const prerender = true;
     <Projects />
     <Statistics />
     <EstimateQuiz />
+    <Reviews />
+    <FinalCta />
   </main>
+  <Footer />
 </BaseLayout>

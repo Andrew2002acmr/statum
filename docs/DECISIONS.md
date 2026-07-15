@@ -1,5 +1,13 @@
 # DECISIONS
 
+## 2026-07-15 - Reviews and footer use placeholders until client data is approved
+
+- Decision: Stage 6 adds review placeholders, final CTA, and footer without fictional testimonials, contacts, legal data, or social links. `[Technical recommendation]` `[Assumption/TBD]`
+- Reason: generated JPG testimonials, names, ratings, phone, address, legal links, and social links are not approved business data. Showing them as real would mislead users. `[Technical recommendation]` `[Assumption/TBD]`
+- Implementation: reviews live in `src/data/reviews.ts` with nullable author/rating/project fields and `placeholder` status; footer copy lives in `src/data/footer.ts`; final CTA copy lives in `src/data/final-cta.ts`. `[Technical recommendation]`
+- Navigation: shared `site.nav` now targets existing public sections: `#about`, `#services`, `#projects`, `#estimate`, `#reviews`, and `#contact`. `[Technical recommendation]`
+- Follow-up: replace placeholders only after receiving approved testimonials, contacts, legal documents, logo, production images, and request delivery channel. `[Assumption/TBD]`
+
 ## 2026-07-15 - Estimate quiz without price calculation
 
 - Decision: Stage 5 adds a five-step estimate quiz as progressive enhancement with vanilla TypeScript. It collects temporary parameters but does not calculate price, request contacts, call Astro Actions, or send data to a server. `[Technical recommendation]` `[Assumption/TBD]`

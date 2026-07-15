@@ -1,0 +1,50 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import { finalCta } from "../../data/final-cta";
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+---
+
+<section
+  aria-labelledby="contact-title"
+  class="border-b border-white/10 bg-[rgb(var(--color-surface-dark))] text-white"
+  id="contact"
+>
+  <Container>
+    <div
+      class="grid gap-8 py-[var(--section-space-sm)] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
+    >
+      <div class="min-w-0">
+        <div class="mb-5 flex items-center gap-4">
+          <span
+            aria-hidden="true"
+            class="h-px w-12 bg-[rgb(var(--color-accent))]"></span>
+          <p
+            class="text-sm font-bold uppercase tracking-[0.12em] text-[rgb(var(--color-accent))]"
+          >
+            {finalCta.eyebrow}
+          </p>
+        </div>
+        <h2
+          class="max-w-4xl text-[clamp(2rem,3.8vw,4rem)] font-black uppercase leading-[1.02]"
+          id="contact-title"
+        >
+          {finalCta.title}
+        </h2>
+        <p class="mt-5 max-w-3xl text-base leading-8 text-white/70 sm:text-lg">
+          {finalCta.description}
+        </p>
+        <p class="mt-4 max-w-2xl text-sm leading-6 text-white/52">
+          {finalCta.secondaryText}
+        </p>
+      </div>
+
+      <Button href={finalCta.primaryHref} className="w-full lg:w-auto">
+        <span class="inline-flex items-center gap-2">
+          {finalCta.primaryLabel}
+          <ArrowRight aria-hidden="true" size={18} />
+        </span>
+      </Button>
+    </div>
+  </Container>
+</section>

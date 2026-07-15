@@ -1,0 +1,63 @@
+---
+import type { Review } from "../../data/reviews";
+
+const { text, author, project, rating, status } = Astro.props as Review;
+const isConfirmed = status === "confirmed";
+---
+
+<article
+  class="min-w-0 rounded-[var(--radius-md)] border border-[rgb(var(--color-border))] bg-[rgb(var(--color-surface))] p-6 shadow-[var(--shadow-soft)]"
+  data-review-card
+  data-review-status={status}
+>
+  {
+    isConfirmed ? (
+      <>
+        {rating && (
+          <p
+            aria-label={`Оценка ${rating} из 5`}
+            class="text-sm font-bold text-[rgb(var(--color-accent-strong))]"
+            data-review-rating
+          >
+            {rating}/5
+          </p>
+        )}
+        <blockquote class="mt-4 text-base leading-7 text-[rgb(var(--color-text))]">
+          <p>{text}</p>
+        </blockquote>
+        {(author || project) && (
+          <footer class="mt-6 border-t border-[rgb(var(--color-border))] pt-4">
+            {author && (
+              <cite
+                class="block not-italic text-sm font-black uppercase text-[rgb(var(--color-text))]"
+                data-review-author
+              >
+                {author}
+              </cite>
+            )}
+            {project && (
+              <p class="mt-1 text-sm leading-6 text-[rgb(var(--color-muted))]">
+                {project}
+              </p>
+            )}
+          </footer>
+        )}
+      </>
+    ) : (
+      <div aria-label="Место для будущего подтверждённого отзыва">
+        <p
+          aria-hidden="true"
+          class="text-5xl font-black leading-none text-[rgb(var(--color-accent))]"
+        >
+          “
+        </p>
+        <p class="mt-4 text-base leading-7 text-[rgb(var(--color-text))]">
+          {text}
+        </p>
+        <p class="mt-6 border-t border-[rgb(var(--color-border))] pt-4 text-sm leading-6 text-[rgb(var(--color-muted))]">
+          Имя, проект и оценка появятся только после подтверждения.
+        </p>
+      </div>
+    )
+  }
+</article>
