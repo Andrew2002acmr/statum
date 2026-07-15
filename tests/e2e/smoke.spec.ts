@@ -38,6 +38,9 @@ for (const viewport of viewports) {
     await expect(page.locator("header")).toBeVisible();
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("h1")).toContainText("Ремонт под контролем");
+    await expect(page.locator("#about")).toBeVisible();
+    await expect(page.locator("#process")).toBeVisible();
+    await expect(page.locator("[data-process-step]")).toHaveCount(5);
     await expect(
       page.getByRole("link", { name: /Получить расчёт/i }).first(),
     ).toBeVisible();
@@ -77,6 +80,18 @@ for (const viewport of viewports) {
         width: viewport.width,
         height: Math.min(viewport.height, 900),
       },
+    });
+
+    await page.locator("#about").screenshot({
+      path: testInfo.outputPath(
+        `about-${viewport.width}x${viewport.height}.png`,
+      ),
+    });
+
+    await page.locator("#process").screenshot({
+      path: testInfo.outputPath(
+        `process-${viewport.width}x${viewport.height}.png`,
+      ),
     });
   });
 }

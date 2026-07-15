@@ -3,6 +3,8 @@ import Container from "../components/ui/Container.astro";
 import Header from "../components/layout/Header.astro";
 import Hero from "../components/sections/Hero.astro";
 import TrustFeatures from "../components/sections/TrustFeatures.astro";
+import About from "../components/sections/About.astro";
+import Process from "../components/sections/Process.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 export const prerender = true;
@@ -17,6 +19,8 @@ export const prerender = true;
   <main>
     <Hero />
     <TrustFeatures />
+    <About />
+    <Process />
     <Container>
       <section
         aria-label="Будущие секции лендинга"

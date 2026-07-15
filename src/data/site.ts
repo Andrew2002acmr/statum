@@ -9,7 +9,7 @@ export const site = {
   primaryCta: "Получить расчёт",
   secondaryCta: "Обсудить проект",
   nav: [
-    { label: "Подход", href: "#hero" },
+    { label: "Подход", href: "#about" },
     { label: "Преимущества", href: "#trust" },
     { label: "Услуги", href: "#services" },
     { label: "Работы", href: "#projects" },
