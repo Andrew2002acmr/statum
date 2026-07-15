@@ -25,28 +25,32 @@ const Icon = icons[icon];
 ---
 
 <article
-  class="grid h-full overflow-hidden rounded-[var(--radius-md)] border border-[rgb(var(--color-border))] bg-[rgb(var(--color-surface))] shadow-[var(--shadow-soft)]"
+  class="flex h-full min-w-0 flex-col overflow-hidden rounded-[var(--radius-md)] border border-[rgb(var(--color-border))] bg-[rgb(var(--color-surface))] shadow-[var(--shadow-soft)]"
   data-service-card
 >
   <ImagePlaceholder
     decorative
     ratio={imageAspectRatio}
-    className="rounded-none border-0 bg-[linear-gradient(135deg,rgb(17_19_21_/_0.08),rgb(255_255_255_/_0.78)_45%,rgb(var(--color-accent)_/_0.13))]"
+    className="shrink-0 rounded-none border-0 bg-[linear-gradient(135deg,rgb(17_19_21_/_0.08),rgb(255_255_255_/_0.78)_45%,rgb(var(--color-accent)_/_0.13))]"
   />
-  <div class="grid content-start gap-4 p-5">
+  <div class="flex min-w-0 flex-1 flex-col gap-4 p-5">
     <div
-      class="grid h-11 w-11 place-items-center rounded-[var(--radius-sm)] border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg))] text-[rgb(var(--color-text))]"
+      class="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-sm)] border border-[rgb(var(--color-border))] bg-[rgb(var(--color-bg))] text-[rgb(var(--color-text))]"
       title={imageLabel}
     >
       <Icon aria-hidden="true" size={23} stroke-width={1.9} />
     </div>
-    <div>
+    <div class="min-w-0">
       <h3
-        class="text-lg font-black leading-tight text-[rgb(var(--color-text))]"
+        class="break-words text-lg font-black leading-tight text-[rgb(var(--color-text))] [overflow-wrap:anywhere]"
+        data-service-card-title
       >
         {title}
       </h3>
-      <p class="mt-3 text-sm leading-[1.7] text-[rgb(var(--color-muted))]">
+      <p
+        class="mt-3 break-words text-sm leading-[1.7] text-[rgb(var(--color-muted))] [overflow-wrap:anywhere]"
+        data-service-card-description
+      >
         {description}
       </p>
     </div>

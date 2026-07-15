@@ -16,6 +16,16 @@ async function expectNoHorizontalOverflow(page: Page) {
   expect(hasHorizontalOverflow).toBe(false);
 }
 
+async function expectServiceCardTextFits(page: Page) {
+  const overflowingText = await page
+    .locator("[data-service-card-title], [data-service-card-description]")
+    .evaluateAll((nodes) =>
+      nodes.some((node) => node.scrollWidth > node.clientWidth),
+    );
+
+  expect(overflowingText).toBe(false);
+}
+
 for (const viewport of viewports) {
   test(`home page smoke ${viewport.width}x${viewport.height}`, async ({
     page,
@@ -113,6 +123,16 @@ for (const viewport of viewports) {
         `services-${viewport.width}x${viewport.height}.png`,
       ),
     });
+
+    await page
+      .locator("[data-service-card-description]")
+      .first()
+      .evaluate((node) => {
+        node.textContent =
+          "Длинное описание услуги без фиксированной длины и с оченьдлиннымнепрерывнымфрагментомкоторыйдолженпереноситьсявнутрикарточкибезобрезки";
+      });
+    await expectServiceCardTextFits(page);
+    await expectNoHorizontalOverflow(page);
 
     await page.locator("#benefits").screenshot({
       path: testInfo.outputPath(
