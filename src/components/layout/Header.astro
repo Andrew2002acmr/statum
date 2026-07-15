@@ -1,0 +1,102 @@
+---
+import { Menu } from "@lucide/astro";
+import { site } from "../../data/site";
+import Button from "../ui/Button.astro";
+import Container from "../ui/Container.astro";
+---
+
+<header
+  class="border-b border-white/10 bg-[rgb(var(--color-surface-dark))] text-white"
+>
+  <Container>
+    <div class="flex min-h-20 items-center justify-between gap-5">
+      <a
+        aria-label={`${site.companyName}: перейти к началу страницы`}
+        class="group flex min-w-0 items-center gap-3"
+        href="#top"
+      >
+        <span
+          aria-hidden="true"
+          class="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-sm)] border border-[rgb(var(--color-accent))] text-lg font-black text-[rgb(var(--color-accent))]"
+        >
+          С
+        </span>
+        <span class="min-w-0">
+          <span class="block text-lg font-black leading-none tracking-[0.08em]">
+            {site.companyName}
+          </span>
+          <span
+            class="mt-1 block text-[0.68rem] uppercase tracking-[0.16em] text-white/55"
+          >
+            {site.brandCaption}
+          </span>
+        </span>
+      </a>
+
+      <nav
+        aria-label="Основная навигация"
+        class="hidden items-center gap-7 lg:flex"
+      >
+        {
+          site.nav.map((item) => (
+            <a
+              class="text-sm font-medium text-white/76 transition hover:text-white"
+              href={item.href}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="hidden items-center gap-4 lg:flex">
+        <span class="max-w-40 text-right text-sm leading-5 text-white/72"
+          >{site.phoneLabel}</span
+        >
+        <Button href="#lead-request" className="min-h-10 px-4 py-2">
+          {site.secondaryCta}
+        </Button>
+      </div>
+
+      <div class="lg:hidden" data-mobile-menu data-state="closed">
+        <button
+          aria-controls="mobile-navigation"
+          aria-expanded="false"
+          aria-label="Открыть меню"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-[var(--radius-sm)] border border-white/20 text-white transition hover:border-[rgb(var(--color-accent))] hover:text-[rgb(var(--color-accent))]"
+          data-mobile-menu-button
+          type="button"
+        >
+          <Menu aria-hidden="true" size={22} />
+        </button>
+      </div>
+    </div>
+
+    <nav
+      aria-label="Мобильная навигация"
+      class="border-t border-white/10 py-4 lg:hidden"
+      data-mobile-menu-panel
+      hidden
+      id="mobile-navigation"
+    >
+      <div class="grid gap-2">
+        {
+          site.nav.map((item) => (
+            <a
+              class="rounded-[var(--radius-sm)] px-3 py-3 text-base font-medium text-white/82 transition hover:bg-white/6 hover:text-white"
+              href={item.href}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <div class="mt-2 grid gap-3 border-t border-white/10 pt-4">
+          <span class="text-sm text-white/62">{site.phoneLabel}</span>
+          <Button href="#lead-request">{site.primaryCta}</Button>
+        </div>
+      </div>
+    </nav>
+  </Container>
+</header>
+
+<script src="../../scripts/mobile-menu.ts"></script>
