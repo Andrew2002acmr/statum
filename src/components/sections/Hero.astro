@@ -1,6 +1,7 @@
 ---
 import { ArrowRight, CircleCheck } from "@lucide/astro";
 import { site } from "../../data/site";
+import LeadForm from "../forms/LeadForm.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
@@ -84,7 +85,7 @@ import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
         </ul>
       </div>
 
-      <div class="relative min-h-[430px] md:min-h-[500px] xl:min-h-[560px]">
+      <div class="relative min-h-[560px] md:min-h-[620px] xl:min-h-[720px]">
         <div
           class="absolute inset-0 overflow-hidden rounded-[var(--radius-sm)] border border-white/10 bg-white/5 shadow-[var(--shadow-strong)]"
         >
@@ -100,38 +101,15 @@ import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
         </div>
 
         <aside
-          aria-labelledby="lead-request-title"
-          class="absolute bottom-5 left-5 right-5 rounded-[var(--radius-sm)] border border-white/12 bg-[rgb(var(--color-surface-dark)_/_0.88)] p-6 text-white shadow-[var(--shadow-strong)] backdrop-blur-sm sm:left-auto sm:w-[360px] lg:right-6"
+          aria-labelledby="lead-form-hero-title"
+          class="relative z-10 m-5 rounded-[var(--radius-sm)] border border-white/12 bg-[rgb(var(--color-surface-dark)_/_0.88)] p-5 text-white shadow-[var(--shadow-strong)] backdrop-blur-sm sm:ml-auto sm:w-[380px] xl:mr-6 xl:mt-14"
           id="lead-request"
         >
-          <p
-            class="text-sm font-bold uppercase tracking-[0.1em] text-[rgb(var(--color-accent))]"
-          >
-            Временная форма
-          </p>
-          <h2
-            class="mt-2 text-xl font-black uppercase leading-tight"
-            id="lead-request-title"
-          >
-            {site.hero.formTitle}
-          </h2>
-          <p class="mt-3 text-sm leading-6 text-white/68">
-            {site.hero.formDescription}
-          </p>
-          <div class="mt-5 grid gap-3" aria-hidden="true">
-            <div
-              class="h-11 rounded-[var(--radius-sm)] border border-white/16 bg-white"
-            >
-            </div>
-            <div
-              class="h-11 rounded-[var(--radius-sm)] border border-white/16 bg-white"
-            >
-            </div>
-            <div
-              class="h-11 rounded-[var(--radius-sm)] bg-[rgb(var(--color-accent))]"
-            >
-            </div>
-          </div>
+          <LeadForm
+            source="hero"
+            title={site.hero.formTitle}
+            description={site.hero.formDescription}
+          />
         </aside>
       </div>
     </div>

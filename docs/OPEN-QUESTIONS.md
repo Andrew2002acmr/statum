@@ -1,5 +1,25 @@
 # OPEN-QUESTIONS
 
+## Stage 7 - Telegram delivery and personal data blockers
+
+### Critical before production launch
+
+1. Has the production Telegram bot been created and who owns it? Current value: `TBD`. `[Assumption/TBD]`
+2. Should leads be delivered to a private chat or a group? Current value: `TBD`. `[Assumption/TBD]`
+3. What is the production `TELEGRAM_CHAT_ID`? Current value: `TBD`; it must be stored only as a server secret. `[Assumption/TBD]`
+4. Who receives and processes Telegram leads? Current value: `TBD`. `[Assumption/TBD]`
+5. What exact consent text should be displayed near the form? Current value: `TBD`. `[Assumption/TBD]`
+6. Where is the approved privacy policy page or document? Current value: `TBD`; production launch is blocked until it exists. `[Assumption/TBD]`
+7. Which production domain should be registered in Cloudflare Turnstile? Current value: `TBD`. `[Assumption/TBD]`
+8. What are the production `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `TURNSTILE_SITE_KEY`, and `TURNSTILE_SECRET_KEY` values? Current value: `TBD`; values must never be committed. `[Assumption/TBD]`
+9. Is the Russian phone format `+7 (999) 123-45-67` correct for the production audience and region? Current value: `TBD`; it is used as the current implementation assumption. `[Assumption/TBD]`
+10. Should the completed estimate quiz form remain the primary post-quiz contact scenario, or should another contact pattern be approved later? Current value: `TBD`. `[Assumption/TBD]`
+
+### Can be clarified later
+
+1. Should nginx `limit_req` be added in deployment in addition to the in-memory Node limiter? Current value: `TBD`. `[Technical recommendation]`
+2. Should lead messages include extra metadata such as campaign source after analytics is approved? Current value: `TBD`. `[Assumption/TBD]`
+
 ## Stage 6 - reviews, final CTA, and footer blockers
 
 ### Critical before production launch

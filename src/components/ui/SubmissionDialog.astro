@@ -1,0 +1,56 @@
+---
+export interface Props {
+  id: string;
+}
+
+const { id } = Astro.props as Props;
+---
+
+<dialog
+  aria-labelledby={`${id}-title`}
+  class="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[min(92vw,31rem)] overflow-y-auto rounded-[var(--radius-md)] border border-white/12 bg-[rgb(var(--color-surface-dark))] p-0 text-white shadow-[var(--shadow-strong)] backdrop:bg-black/60"
+  data-submission-dialog
+  id={id}
+>
+  <div class="grid gap-5 p-6 sm:p-7">
+    <div>
+      <p
+        class="text-sm font-bold uppercase tracking-[0.12em] text-[rgb(var(--color-accent))]"
+        data-submission-dialog-eyebrow
+      >
+        Статус заявки
+      </p>
+      <h2
+        class="mt-2 text-2xl font-black uppercase leading-tight"
+        data-submission-dialog-title
+        id={`${id}-title`}
+      >
+        Заявка отправлена
+      </h2>
+      <p
+        class="mt-3 text-sm leading-6 text-white/72 sm:text-base"
+        data-submission-dialog-message
+      >
+        Параметры ремонта и контактные данные переданы специалисту.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3 sm:flex-row sm:justify-end">
+      <button
+        class="inline-flex min-h-11 items-center justify-center rounded-[var(--radius-sm)] border border-white/18 px-5 py-3 text-sm font-semibold text-white transition hover:border-[rgb(var(--color-accent))] hover:text-[rgb(var(--color-accent))] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[rgb(var(--color-accent))]"
+        data-submission-dialog-retry
+        hidden
+        type="button"
+      >
+        Попробовать снова
+      </button>
+      <button
+        class="inline-flex min-h-11 items-center justify-center rounded-[var(--radius-sm)] bg-[rgb(var(--color-accent))] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[rgb(var(--color-accent-strong))] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[rgb(var(--color-accent))]"
+        data-submission-dialog-close
+        type="button"
+      >
+        Закрыть
+      </button>
+    </div>
+  </div>
+</dialog>

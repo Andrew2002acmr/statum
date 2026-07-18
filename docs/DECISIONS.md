@@ -1,5 +1,24 @@
 # DECISIONS
 
+## 2026-07-15 - Completed lead flow stays in context
+
+- Decision: after the five-step estimate quiz, the user stays inside `#estimate`; the final quiz state shows a summary of selected answers and the same reusable `LeadForm` with `source="estimate"`. `[Brief]` `[Technical recommendation]`
+- Reason: moving the user from the quiz back to the Hero form breaks context and looks like a technical jump between unrelated blocks. `[Brief]`
+- Dialogs: successful delivery and transport/server failures use a native HTML `dialog` controlled by vanilla TypeScript; success is shown only after the server Action returns success. `[Technical recommendation]`
+- Mock delivery: `LEAD_DELIVERY_MODE=mock` with `MOCK_LEAD_RESULT=success|error|timeout` is available only outside production for manual and automated checks without real Telegram credentials. Production uses only Telegram delivery. `[Technical recommendation]`
+- Validation: the reusable form uses inline client validation for UX, while the server Zod schema remains the source of truth. Current phone format is the Russian number format `+7 (999) 123-45-67`; this is a product assumption until the region/contact policy is confirmed. `[Assumption/TBD]` `[Technical recommendation]`
+
+## 2026-07-15 - Lead submissions are delivered to Telegram
+
+- Decision: Stage 7 uses Astro Action `submitLead` as the only server entry point for lead submissions. `[Brief]` `[Technical recommendation]`
+- Delivery: Telegram Bot API `sendMessage` is the only production delivery channel; CRM, email, webhook, polling, bot commands, Mini App, and a separate bot application are out of scope. `[Brief]`
+- Transport: Telegram delivery uses native `fetch` with POST JSON, timeout, HTTP status checks, and Telegram `ok` validation; no Telegram SDK is added. `[Technical recommendation]`
+- Anti-spam: server validation uses Zod, honeypot, Cloudflare Turnstile siteverify, and an in-memory rate limit. `[Brief]` `[Technical recommendation]`
+- Rate limit: the current limiter is process-local for a single Node instance; it resets on restart and is not shared between multiple instances. nginx `limit_req` can be added later for infrastructure-level throttling. `[Technical recommendation]`
+- Target: one Telegram chat target is configured through `TELEGRAM_CHAT_ID`; the bot token and chat id are server secrets and must not be exposed to HTML, client JavaScript, logs, screenshots, or Git. `[Brief]` `[Technical recommendation]`
+- Testing: automated tests use a `NODE_ENV=test` transport seam and do not send real Telegram messages. `[Technical recommendation]`
+- Follow-up: production launch still requires real bot credentials, target chat/group confirmation, Turnstile production domain, approved consent text, and privacy policy. `[Assumption/TBD]`
+
 ## 2026-07-15 - Reviews and footer use placeholders until client data is approved
 
 - Decision: Stage 6 adds review placeholders, final CTA, and footer without fictional testimonials, contacts, legal data, or social links. `[Technical recommendation]` `[Assumption/TBD]`
