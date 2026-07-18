@@ -8,9 +8,10 @@ const playwrightCommand = isWindows
   : "node_modules/.bin/playwright";
 const basePreviewPort = Number(process.env.PLAYWRIGHT_PREVIEW_PORT ?? "4322");
 
-function run(command, args) {
+function run(command, args, env = process.env) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
+      env,
       shell: isWindows,
       stdio: "inherit",
     });
@@ -26,6 +27,19 @@ function run(command, args) {
       }
     });
   });
+}
+
+function createE2eEnv(mockResult = "success") {
+  return {
+    ...process.env,
+    NODE_ENV: "test",
+    LEAD_DELIVERY_MODE: "mock",
+    MOCK_LEAD_RESULT: mockResult,
+    TELEGRAM_BOT_TOKEN: "test-token",
+    TELEGRAM_CHAT_ID: "test-chat",
+    TURNSTILE_SITE_KEY: "",
+    TURNSTILE_SECRET_KEY: "test-secret",
+  };
 }
 
 function stopProcessTree(child) {
@@ -72,13 +86,7 @@ async function runPlaywrightPass(mockResult, args, portOffset) {
       ["run", "preview", "--", "--host", "127.0.0.1", "--port", previewPort],
       {
         env: {
-          ...process.env,
-          NODE_ENV: "test",
-          LEAD_DELIVERY_MODE: "mock",
-          MOCK_LEAD_RESULT: mockResult,
-          TELEGRAM_BOT_TOKEN: "test-token",
-          TELEGRAM_CHAT_ID: "test-chat",
-          TURNSTILE_SECRET_KEY: "test-secret",
+          ...createE2eEnv(mockResult),
         },
         shell: isWindows,
         stdio: "inherit",
@@ -96,7 +104,7 @@ async function runPlaywrightPass(mockResult, args, portOffset) {
 let exitCode = 0;
 
 try {
-  await run(npmCommand, ["run", "build"]);
+  await run(npmCommand, ["run", "build"], createE2eEnv());
   await runPlaywrightPass("success", ["test", "--grep-invert", "@mock-"], 0);
   await runPlaywrightPass("error", ["test", "--grep", "@mock-error"], 1);
   await runPlaywrightPass("timeout", ["test", "--grep", "@mock-timeout"], 2);

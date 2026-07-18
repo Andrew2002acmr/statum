@@ -156,13 +156,6 @@ const turnstileSiteKey = TURNSTILE_SITE_KEY;
 
   <input name="source" type="hidden" value={source} />
   <input data-lead-quiz-input name="quizAnswers" type="hidden" value="" />
-  <input
-    data-lead-turnstile-input
-    name="turnstileToken"
-    type="hidden"
-    value=""
-  />
-
   <div aria-hidden="true" class="hidden">
     <label for={`${formId}-company`}>Компания</label>
     <input
@@ -178,7 +171,8 @@ const turnstileSiteKey = TURNSTILE_SITE_KEY;
     turnstileSiteKey ? (
       <div
         class="cf-turnstile"
-        data-response-field="false"
+        data-response-field="true"
+        data-response-field-name="turnstileToken"
         data-sitekey={turnstileSiteKey}
         data-theme="dark"
       />

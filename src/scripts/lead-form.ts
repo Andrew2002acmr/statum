@@ -242,19 +242,6 @@ function syncQuizAnswers(form: HTMLFormElement) {
   target.value = source?.value ?? "";
 }
 
-function syncTurnstileToken(form: HTMLFormElement) {
-  const target = form.querySelector<HTMLInputElement>(
-    "[data-lead-turnstile-input]",
-  );
-  const widgetToken = form.querySelector<HTMLInputElement>(
-    'input[name="cf-turnstile-response"]',
-  );
-
-  if (target && widgetToken?.value) {
-    target.value = widgetToken.value;
-  }
-}
-
 function createLeadFormData(form: HTMLFormElement) {
   const sourceData = new FormData(form);
   const targetData = new FormData();
@@ -283,7 +270,7 @@ function createLeadFormData(form: HTMLFormElement) {
 function resetTurnstile(form: HTMLFormElement) {
   const widget = form.querySelector(".cf-turnstile");
   const token = form.querySelector<HTMLInputElement>(
-    "[data-lead-turnstile-input]",
+    'input[name="turnstileToken"]',
   );
 
   if (token) {
@@ -422,7 +409,6 @@ document
 
       clearFieldErrors(form);
       syncQuizAnswers(form);
-      syncTurnstileToken(form);
       setStatus(form, "Заявка отправляется", "muted");
       setFormState(form, "submitting");
 
