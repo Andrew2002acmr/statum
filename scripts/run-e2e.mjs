@@ -94,7 +94,11 @@ async function runPlaywrightPass(mockResult, args, portOffset) {
     );
 
     await waitForServer(previewUrl);
-    await run(playwrightCommand, args);
+    await run(playwrightCommand, [
+      ...args,
+      "--output",
+      `test-results/${mockResult}`,
+    ]);
   } finally {
     stopProcessTree(preview);
     await new Promise((resolve) => setTimeout(resolve, 500));

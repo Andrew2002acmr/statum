@@ -1,5 +1,12 @@
 # DECISIONS
 
+## 2026-07-21 - Hero uses the approved interior image
+
+- Decision: Hero uses `src/assets/images/hero/hero-main.png` through Astro `Picture` as a full-width decorative media layer. Astro generates responsive AVIF and WebP sources with intrinsic dimensions, eager loading, and high fetch priority because the image is an LCP candidate. `[Brief]` `[Materials]` `[Technical recommendation]`
+- Desktop composition: the offer stays on the left over a directed graphite gradient, the TV area remains visible in the middle, and the existing reusable `LeadForm` occupies an opaque dark card on the right. `[Brief]` `[Technical recommendation]`
+- Tablet and mobile composition: below `1200px` the image becomes a separate media area before the content; below `900px` the offer and form stack vertically. This avoids collisions and keeps the interior visible without shrinking the form or heading excessively. `[Brief]` `[Technical recommendation]`
+- Contact: the confirmed phone is stored once in `src/data/site.ts` and rendered as `tel:+79951292750` in desktop and mobile Header variants. `[Brief]` `[Technical recommendation]`
+
 ## 2026-07-15 - Completed lead flow stays in context
 
 - Decision: after the five-step estimate quiz, the user stays inside `#estimate`; the final quiz state shows a summary of selected answers and the same reusable `LeadForm` with `source="estimate"`. `[Brief]` `[Technical recommendation]`

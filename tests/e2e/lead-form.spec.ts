@@ -277,6 +277,9 @@ test("hero form validates fields before calling the Action", async ({
   await expect(form.locator('[data-field-error="consent"]')).toContainText(
     "Подтвердите согласие",
   );
+  await form.screenshot({
+    path: testInfo.outputPath("hero-form-validation-error.png"),
+  });
   expect(getActionRequestCount()).toBe(0);
 
   await form.locator('input[name="name"]').fill("А");

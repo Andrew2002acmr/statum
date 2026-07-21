@@ -50,8 +50,9 @@ import Container from "../ui/Container.astro";
       </nav>
 
       <div class="hidden items-center gap-4 lg:flex">
-        <span class="max-w-40 text-right text-sm leading-5 text-white/72"
-          >{site.phoneLabel}</span
+        <a
+          class="text-right text-sm font-semibold leading-5 text-white/82 transition hover:text-[rgb(var(--color-accent))]"
+          href={site.phoneHref}>{site.phoneLabel}</a
         >
         <Button href="#lead-request" className="min-h-10 px-4 py-2">
           {site.secondaryCta}
@@ -91,7 +92,9 @@ import Container from "../ui/Container.astro";
           ))
         }
         <div class="mt-2 grid gap-3 border-t border-white/10 pt-4">
-          <span class="text-sm text-white/62">{site.phoneLabel}</span>
+          <a class="text-sm font-semibold text-white/82" href={site.phoneHref}
+            >{site.phoneLabel}</a
+          >
           <Button href="#lead-request">{site.primaryCta}</Button>
         </div>
       </div>

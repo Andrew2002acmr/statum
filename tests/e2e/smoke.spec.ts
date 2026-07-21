@@ -72,6 +72,32 @@ for (const viewport of viewports) {
     await expect(page.locator("header")).toBeVisible();
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("h1")).toContainText("Ремонт под контролем");
+    const hero = page.locator("#hero");
+    const heroImage = hero.locator(
+      '[data-testid="hero-image"] img, img[data-testid="hero-image"]',
+    );
+    await expect(heroImage).toHaveCount(1);
+    await expect(heroImage).toBeVisible();
+    await expect
+      .poll(() =>
+        heroImage.evaluate(
+          (image: HTMLImageElement) => image.complete && image.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    await expect(
+      hero.getByRole("link", { name: /Рассчитать стоимость/i }),
+    ).toHaveAttribute("href", "#estimate");
+    await expect(
+      hero.getByRole("link", { name: /Посмотреть работы/i }),
+    ).toHaveAttribute("href", "#projects");
+    await expect(page.getByTestId("lead-form-hero")).toBeVisible();
+    await expect(
+      page.getByTestId("lead-form-hero").locator('input[name="source"]'),
+    ).toHaveValue("hero");
+    await expect(
+      page.locator('a[href="tel:+79951292750"]').first(),
+    ).toContainText("+7 (995) 129-27-50");
     await expect(page.locator("#about")).toBeVisible();
     await expect(page.locator("#process")).toBeVisible();
     await expect(page.locator("#services")).toBeVisible();
@@ -117,10 +143,6 @@ for (const viewport of viewports) {
         page.getByRole("link", { name: "Контакт" }).first(),
       ).toHaveAttribute("href", "#contact");
     }
-
-    await expect(
-      page.getByRole("link", { name: /Получить расчёт/i }).first(),
-    ).toBeVisible();
 
     if (viewport.width < 1024) {
       const menuButton = page.getByRole("button", { name: "Открыть меню" });
@@ -171,6 +193,12 @@ for (const viewport of viewports) {
         `home-${viewport.width}x${viewport.height}.png`,
       ),
       fullPage: true,
+    });
+
+    await hero.screenshot({
+      path: testInfo.outputPath(
+        `hero-${viewport.width}x${viewport.height}.png`,
+      ),
     });
 
     await page.screenshot({

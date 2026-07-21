@@ -1,117 +1,391 @@
 ---
+import { Picture } from "astro:assets";
 import { ArrowRight, CircleCheck } from "@lucide/astro";
+import heroImage from "../../assets/images/hero/hero-main.png";
 import { site } from "../../data/site";
 import LeadForm from "../forms/LeadForm.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
-import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
 ---
 
-<section
-  class="overflow-hidden border-b border-white/10 bg-[rgb(var(--color-surface-dark))] text-white"
-  id="hero"
-  aria-labelledby="hero-title"
->
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="hero__media" aria-hidden="true">
+    <Picture
+      alt=""
+      class="hero__picture"
+      data-testid="hero-image"
+      decoding="async"
+      fetchpriority="high"
+      formats={["avif", "webp"]}
+      loading="eager"
+      sizes="(min-width: 1200px) 100vw, 100vw"
+      src={heroImage}
+      widths={[390, 768, 1024, 1440, 1672]}
+    />
+  </div>
+  <div class="hero__shade" aria-hidden="true"></div>
+
   <Container>
-    <div
-      class="grid gap-12 py-12 lg:py-14 xl:min-h-[660px] xl:grid-cols-[minmax(0,0.98fr)_minmax(520px,0.88fr)] xl:items-center xl:gap-16"
-    >
-      <div class="max-w-[820px]">
-        <div
-          class="mb-7 flex items-center gap-4 text-[0.82rem] font-bold uppercase tracking-[0.12em] text-[rgb(var(--color-accent))]"
-        >
-          <span
-            aria-hidden="true"
-            class="h-px w-12 bg-[rgb(var(--color-accent))]"></span>
+    <div class="hero__container">
+      <div class="hero__content">
+        <div class="hero__eyebrow">
+          <span aria-hidden="true"></span>
           <p>{site.hero.eyebrow}</p>
         </div>
-        <h1
-          class="max-w-[820px] text-[clamp(2.55rem,4.6vw,5.15rem)] font-black uppercase leading-[1.04] text-white xl:leading-[0.99]"
-          id="hero-title"
-        >
-          {site.hero.title}
-          <span class="mt-2 block text-[rgb(var(--color-accent))]"
-            >{site.hero.titleAccent}</span
-          >
-        </h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-white/72">
-          {site.hero.description}
-        </p>
 
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Button href="#lead-request" className="w-full sm:w-auto">
+        <h1 id="hero-title">
+          {site.hero.title}
+          {" "}
+          <span class="hero__title-line">{site.hero.titleContinuation}</span>
+          {" "}
+          <span class="hero__title-accent">{site.hero.titleAccent}</span>
+        </h1>
+
+        <p class="hero__description">{site.hero.description}</p>
+
+        <div class="hero__actions">
+          <Button href="#estimate" className="hero__primary-cta">
             <span class="inline-flex items-center gap-2">
-              {site.primaryCta}
+              {site.hero.primaryCta}
               <ArrowRight aria-hidden="true" size={18} />
             </span>
           </Button>
           <Button
             href="#projects"
             variant="secondary"
-            className="w-full border-white/22 bg-transparent text-white hover:bg-white/6 sm:w-auto"
+            className="hero__secondary-cta"
           >
-            {site.secondaryCta}
+            {site.hero.secondaryCta}
           </Button>
         </div>
 
-        <ul
-          class="mt-8 grid gap-3 text-sm text-white/72 md:grid-cols-3 xl:max-w-[760px]"
-          aria-label="Рабочие принципы"
-        >
-          <li class="flex gap-2">
-            <CircleCheck
-              aria-hidden="true"
-              class="mt-0.5 text-[rgb(var(--color-accent))]"
-              size={18}
-            />
-            <span>Без неподтверждённых обещаний</span>
-          </li>
-          <li class="flex gap-2">
-            <CircleCheck
-              aria-hidden="true"
-              class="mt-0.5 text-[rgb(var(--color-accent))]"
-              size={18}
-            />
-            <span>Понятная коммуникация</span>
-          </li>
-          <li class="flex gap-2">
-            <CircleCheck
-              aria-hidden="true"
-              class="mt-0.5 text-[rgb(var(--color-accent))]"
-              size={18}
-            />
-            <span>Акцент на контроле этапов</span>
-          </li>
+        <ul class="hero__proof" aria-label="Ключевые условия работы">
+          {
+            site.hero.proof.map((item) => (
+              <li>
+                <CircleCheck aria-hidden="true" size={18} />
+                <span>{item}</span>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
-      <div class="relative min-h-[560px] md:min-h-[620px] xl:min-h-[720px]">
-        <div
-          class="absolute inset-0 overflow-hidden rounded-[var(--radius-sm)] border border-white/10 bg-white/5 shadow-[var(--shadow-strong)]"
-        >
-          <ImagePlaceholder
-            decorative
-            ratio="16 / 13"
-            className="h-full rounded-none border-0 bg-[linear-gradient(135deg,rgb(255_255_255_/_0.14),rgb(255_255_255_/_0.04)_45%,rgb(var(--color-accent)_/_0.13))]"
-          />
-          <div
-            class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgb(17_19_21_/_0.24),transparent_45%)]"
-          >
-          </div>
-        </div>
-
-        <aside
-          aria-labelledby="lead-form-hero-title"
-          class="relative z-10 m-5 rounded-[var(--radius-sm)] border border-white/12 bg-[rgb(var(--color-surface-dark)_/_0.88)] p-5 text-white shadow-[var(--shadow-strong)] backdrop-blur-sm sm:ml-auto sm:w-[380px] xl:mr-6 xl:mt-14"
-          id="lead-request"
-        >
-          <LeadForm
-            source="hero"
-            title={site.hero.formTitle}
-            description={site.hero.formDescription}
-          />
-        </aside>
-      </div>
+      <aside
+        aria-labelledby="lead-form-hero-title"
+        class="hero__form"
+        id="lead-request"
+      >
+        <LeadForm
+          source="hero"
+          title={site.hero.formTitle}
+          description={site.hero.formDescription}
+        />
+      </aside>
     </div>
   </Container>
 </section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+    background: rgb(var(--color-surface-dark));
+    color: white;
+  }
+
+  .hero__media,
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__media {
+    z-index: -2;
+    background: rgb(57 48 40);
+  }
+
+  .hero__media :global(picture),
+  .hero__media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__media :global(img) {
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  .hero__shade {
+    z-index: -1;
+    background:
+      linear-gradient(
+        90deg,
+        rgb(12 14 15 / 0.98) 0%,
+        rgb(12 14 15 / 0.9) 25%,
+        rgb(12 14 15 / 0.42) 44%,
+        rgb(12 14 15 / 0.08) 62%,
+        rgb(12 14 15 / 0.2) 100%
+      ),
+      linear-gradient(180deg, rgb(8 9 10 / 0.18), rgb(8 9 10 / 0.3));
+  }
+
+  .hero__container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 34rem) minmax(21.25rem, 24rem);
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(5rem, 12vw, 13rem);
+    min-height: clamp(39rem, 47vw, 45rem);
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero__content {
+    max-width: 34rem;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    color: rgb(var(--color-accent));
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .hero__eyebrow span {
+    width: 3rem;
+    height: 1px;
+    flex: none;
+    background: currentColor;
+  }
+
+  .hero__eyebrow p {
+    margin: 0;
+  }
+
+  h1 {
+    max-width: 34rem;
+    margin: 0;
+    font-size: clamp(3rem, 4vw, 4.2rem);
+    font-weight: 900;
+    line-height: 0.98;
+    text-transform: uppercase;
+  }
+
+  h1 span {
+    display: block;
+  }
+
+  .hero__title-line {
+    color: white;
+  }
+
+  .hero__title-accent {
+    margin-top: 0.45rem;
+    color: rgb(var(--color-accent));
+  }
+
+  .hero__description {
+    max-width: 33rem;
+    margin: 1.5rem 0 0;
+    color: rgb(255 255 255 / 0.78);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .hero__actions :global(.hero__secondary-cta) {
+    border-color: rgb(255 255 255 / 0.32);
+    background: rgb(10 12 13 / 0.5);
+    color: white;
+  }
+
+  .hero__actions :global(.hero__secondary-cta:hover) {
+    border-color: rgb(var(--color-accent));
+    background: rgb(10 12 13 / 0.72);
+    color: white;
+  }
+
+  .hero__proof {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    color: rgb(255 255 255 / 0.76);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    list-style: none;
+  }
+
+  .hero__proof li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .hero__proof :global(svg) {
+    flex: none;
+    margin-top: 0.05rem;
+    color: rgb(var(--color-accent));
+  }
+
+  .hero__form {
+    width: 100%;
+    max-width: 24rem;
+    margin-left: auto;
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: var(--radius-md);
+    background: rgb(17 19 21 / 0.95);
+    box-shadow: var(--shadow-strong);
+  }
+
+  @media (max-width: 1199px) {
+    .hero {
+      display: grid;
+    }
+
+    .hero__media {
+      position: relative;
+      inset: auto;
+      z-index: auto;
+      grid-area: 1 / 1;
+      height: clamp(20rem, 46vw, 27rem);
+    }
+
+    .hero__media :global(img) {
+      object-position: 50% 50%;
+    }
+
+    .hero__shade {
+      position: relative;
+      inset: auto;
+      z-index: 1;
+      grid-area: 1 / 1;
+      background: linear-gradient(
+        180deg,
+        transparent 55%,
+        rgb(17 19 21 / 0.82)
+      );
+      pointer-events: none;
+    }
+
+    .hero__container {
+      grid-template-columns: minmax(0, 1fr) minmax(21.25rem, 23rem);
+      gap: clamp(2rem, 5vw, 4rem);
+      min-height: 0;
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2.65rem, 6vw, 4rem);
+    }
+
+    .hero__proof {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .hero__media {
+      height: clamp(17rem, 52vw, 23rem);
+    }
+
+    .hero__container {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
+      padding-top: 2.75rem;
+      padding-bottom: 3rem;
+    }
+
+    .hero__content,
+    h1,
+    .hero__description {
+      max-width: 42rem;
+    }
+
+    .hero__proof {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hero__form {
+      max-width: 42rem;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 559px) {
+    .hero__media {
+      height: clamp(15rem, 72vw, 19rem);
+    }
+
+    .hero__media :global(img) {
+      object-position: 48% 50%;
+    }
+
+    .hero__container {
+      gap: 2rem;
+      padding-top: 2.25rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .hero__eyebrow {
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      font-size: 0.72rem;
+    }
+
+    .hero__eyebrow span {
+      width: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2.35rem, 12vw, 3.15rem);
+      line-height: 1;
+    }
+
+    .hero__description {
+      margin-top: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .hero__actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero__actions :global(a) {
+      width: 100%;
+    }
+
+    .hero__proof {
+      grid-template-columns: minmax(0, 1fr);
+      font-size: 0.88rem;
+    }
+
+    .hero__form {
+      padding: 1.1rem;
+    }
+  }
+</style>

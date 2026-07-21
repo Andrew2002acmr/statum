@@ -2,10 +2,9 @@ export const site = {
   // TBD: final brand name and legal positioning are not approved yet.
   companyName: "СТАТУМ",
   brandCaption: "ремонт под контролем",
-  // TBD: region must be confirmed by the client.
-  regionLabel: "Регион работы уточняется",
-  // TBD: phone is intentionally not copied from the generated JPG.
-  phoneLabel: "Контакт после согласования",
+  // Confirmed contact supplied for the production landing.
+  phoneLabel: "+7 (995) 129-27-50",
+  phoneHref: "tel:+79951292750",
   primaryCta: "Получить расчёт",
   secondaryCta: "Обсудить проект",
   nav: [
@@ -18,15 +17,21 @@ export const site = {
   ],
   hero: {
     eyebrow: "Ремонтные работы для квартир и домов",
-    // TBD: final offer wording must be approved.
-    title: "Ремонт под контролем",
-    titleAccent: "без лишней суеты",
+    title: "Ремонт под",
+    titleContinuation: "контролем —",
+    titleAccent: "без стресса и переделок",
     description:
-      "Помогаем пройти ремонт понятнее: фиксируем задачи, объясняем этапы и держим фокус на аккуратном результате.",
-    imageLabel: "Заглушка интерьерного изображения для первого экрана",
-    formTitle: "Заявка на расчёт",
+      "Выполняем ремонт квартир, домов и коммерческих помещений. Бесплатно выезжаем на объект, проводим замер и составляем смету.",
+    primaryCta: "Рассчитать стоимость",
+    secondaryCta: "Посмотреть работы",
+    proof: [
+      "Бесплатный выезд и замер",
+      "Работа по договору",
+      "Гарантия 2 года",
+    ],
+    formTitle: "Бесплатный выезд и расчёт",
     formDescription:
-      "Оставьте имя и телефон. Заявка будет отправлена в Telegram после антиспам-проверки.",
+      "Оставьте контакты — свяжемся, уточним задачу и договоримся об удобном времени.",
   },
   trustFeatures: [
     {
