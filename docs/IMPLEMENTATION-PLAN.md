@@ -1,5 +1,12 @@
 # IMPLEMENTATION-PLAN
 
+## 2026-09-13 — первый запуск на Beget VPS
+
+- Production build развёрнут в `/var/www/statum` из `codex/hero-production-image`; внешний HTTPS-адрес `https://lasetirihe.beget.app/` отвечает `200`, HTTP перенаправляется на HTTPS. `[Бриф]` `[Материалы]`
+- Astro запущен под PM2 как `statum` от пользователя `nodejs` на loopback-порту `4321`; Nginx проксирует публичные запросы, а процесс сохранён для автоматического восстановления после перезагрузки. `[Материалы]` `[Рекомендация]`
+- Проверены desktop 1440 px и mobile 390 px: корректные title/H1, отсутствие горизонтального переполнения и ошибок консоли; отправка формы намеренно не выполнялась. `[Материалы]`
+- Следующая production-задача: обновить Astro до исправленной версии, повторить build/check/e2e и затем настроить Telegram/Turnstile secrets. `[Рекомендация]` `[Предположение/TBD]`
+
 ## 2026-09-13 — Benefits: визуализация проектного контроля
 
 - Пользовательский файл `benefits-project-control.png` добавлен в `src/assets/images/generated/benefits/` и подключён через `src/data/assets.ts`; существующий Astro image pipeline создаёт адаптивные варианты. `[Бриф]` `[Материалы]`

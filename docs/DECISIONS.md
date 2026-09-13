@@ -1,5 +1,11 @@
 # DECISIONS
 
+## 2026-09-13 - Beget VPS production topology
+
+- Hosting: the approved Russian VPS is Beget, Ubuntu 24.04, with the existing Node.js 24, PM2 and Nginx image. The temporary public hostname is `lasetirihe.beget.app`. `[Brief]` `[Materials]`
+- Runtime: Nginx terminates HTTPS and proxies to the Astro standalone server bound only to `127.0.0.1:4321`; PM2 process `statum` runs as the unprivileged `nodejs` user and is saved for boot restoration. `[Materials]` `[Technical recommendation]`
+- Deployment source: `/var/www/statum` tracks commit `90d64fa5` from branch `codex/hero-production-image`. The original Beget Nginx configuration is preserved at `/etc/nginx/sites-available/nodejs.before-statum-20260913`. `[Materials]` `[Technical recommendation]`
+
 ## 2026-09-09 - Process uses an organized-renovation visualization
 
 - Decision: the Process section uses the approved Nano Banana Pro 21:9 panorama with a dedicated 4:3 mobile crop. `[Brief]` `[Materials]`
