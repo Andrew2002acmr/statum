@@ -12,7 +12,8 @@ export interface Props {
 
 const { source, title, description, className = "" } = Astro.props as Props;
 const formId = `lead-form-${source}`;
-const turnstileSiteKey = TURNSTILE_SITE_KEY;
+const turnstileSiteKey =
+  process.env.NODE_ENV === "test" ? "" : TURNSTILE_SITE_KEY;
 ---
 
 <form

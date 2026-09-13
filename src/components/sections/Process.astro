@@ -6,9 +6,11 @@ import {
   Ruler,
   Wrench,
 } from "@lucide/astro";
+import { preparedAssets } from "../../data/assets";
 import { processSteps } from "../../data/process";
 import Container from "../ui/Container.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
+import ResponsiveImage from "../ui/ResponsiveImage.astro";
 
 const icons = {
   MessageCircle,
@@ -25,18 +27,35 @@ const icons = {
   id="process"
 >
   <Container>
-    <div class="py-[var(--section-space-lg)]">
-      <SectionHeading
-        eyebrow="Как проходит работа"
-        title="Пять понятных шагов"
-        description="Последовательность помогает заранее увидеть логику проекта и не смешивать обсуждение, подготовку и выполнение работ в один непрозрачный процесс."
-        theme="dark"
-        align="center"
-        id="process-title"
-      />
+    <div class="py-6 sm:py-8 lg:py-10">
+      <div class="process__hero">
+        <ResponsiveImage
+          alt="Интерьерная визуализация аккуратно организованного этапа чистовой отделки квартиры"
+          className="process__visual"
+          desktop={preparedAssets.process.desktop}
+          desktopSizes="(min-width: 1550px) 1500px, calc(100vw - 5rem)"
+          mobile={preparedAssets.process.mobile}
+          mobileSizes="calc(100vw - 2rem)"
+        />
 
-      <div
-        class="mt-12 grid gap-px overflow-hidden rounded-[var(--radius-md)] border border-white/10 bg-white/10 md:grid-cols-2 xl:grid-cols-5"
+        <div aria-hidden="true" class="process__veil"></div>
+
+        <div class="process__copy">
+          <SectionHeading
+            eyebrow="Как проходит работа"
+            title="Пять понятных шагов"
+            description="Последовательность помогает заранее увидеть логику проекта и не смешивать обсуждение, подготовку и выполнение работ в один непрозрачный процесс."
+            theme="dark"
+            id="process-title"
+          />
+        </div>
+
+        <p class="process__caption">Интерьерная визуализация</p>
+      </div>
+
+      <ol
+        aria-label="Этапы работы"
+        class="process__steps grid gap-px overflow-hidden rounded-[var(--radius-md)] border border-white/12 bg-white/12 md:grid-cols-2 xl:grid-cols-5"
       >
         {
           processSteps.map((step, index) => {
@@ -45,32 +64,170 @@ const icons = {
             const isLast = index === processSteps.length - 1;
 
             return (
-              <article
-                class={`relative grid min-h-[250px] content-start gap-5 bg-[rgb(var(--color-surface-dark))] p-6 ${isLast ? "md:col-span-2 xl:col-span-1" : ""}`}
+              <li
+                class={`process__step relative grid min-h-[238px] content-start gap-5 bg-[#151719] p-6 sm:p-7 xl:min-h-[272px] ${isLast ? "md:col-span-2 xl:col-span-1" : ""}`}
                 data-process-step
               >
                 <div class="flex items-start justify-between gap-4">
-                  <span class="text-5xl font-black leading-none text-[rgb(var(--color-accent))]">
+                  <span class="text-[2.7rem] font-black leading-none tracking-[-0.04em] text-[rgb(var(--color-accent))]">
                     {number}
                   </span>
-                  <span class="grid h-12 w-12 place-items-center rounded-[var(--radius-sm)] border border-white/12 text-[rgb(var(--color-accent))]">
-                    <Icon aria-hidden="true" size={24} stroke-width={1.9} />
+                  <span class="grid h-11 w-11 place-items-center rounded-[var(--radius-sm)] border border-white/12 bg-white/[0.025] text-[rgb(var(--color-accent))]">
+                    <Icon aria-hidden="true" size={21} stroke-width={1.9} />
                   </span>
                 </div>
 
                 <div>
-                  <h3 class="text-xl font-black uppercase leading-tight text-white">
+                  <span
+                    aria-hidden="true"
+                    class="mb-5 block h-px w-10 bg-[rgb(var(--color-accent))]/65"
+                  />
+                  <h3 class="text-[1.05rem] font-black uppercase leading-[1.22] tracking-[0.01em] text-white sm:text-lg">
                     {step.title}
                   </h3>
-                  <p class="mt-3 text-sm leading-6 text-white/68">
+                  <p class="mt-3 text-sm leading-6 text-white/64">
                     {step.text}
                   </p>
                 </div>
-              </article>
+              </li>
             );
           })
         }
-      </div>
+      </ol>
     </div>
   </Container>
 </section>
+
+<style>
+  .process__hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: var(--radius-lg);
+    background: rgb(9 10 11);
+    box-shadow: 0 28px 80px rgb(0 0 0 / 0.28);
+  }
+
+  .process__copy {
+    padding: clamp(1.5rem, 5vw, 3rem);
+  }
+
+  :global(.process__visual) {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: rgb(0 0 0 / 0.2);
+  }
+
+  :global(.process__visual img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .process__veil {
+    display: none;
+  }
+
+  .process__caption {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    bottom: auto;
+    z-index: 3;
+    margin: 0;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 999px;
+    background: rgb(17 19 21 / 0.76);
+    padding: 0.4rem 0.65rem;
+    color: rgb(255 255 255 / 0.72);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+
+  .process__steps {
+    position: relative;
+    z-index: 4;
+    margin-top: 1rem;
+    box-shadow: 0 22px 60px rgb(0 0 0 / 0.24);
+  }
+
+  .process__step::before {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      rgb(var(--color-accent)) 0,
+      rgb(var(--color-accent) / 0.2) 42%,
+      transparent 82%
+    );
+    content: "";
+  }
+
+  @media (min-width: 640px) and (max-width: 1023px) {
+    :global(.process__visual) {
+      aspect-ratio: 16 / 9;
+    }
+
+    :global(.process__visual img) {
+      object-position: 58% center;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .process__hero {
+      display: grid;
+      min-height: clamp(27rem, 35vw, 32rem);
+    }
+
+    :global(.process__visual),
+    .process__veil,
+    .process__copy {
+      grid-area: 1 / 1;
+    }
+
+    :global(.process__visual) {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    .process__veil {
+      z-index: 1;
+      display: block;
+      background:
+        linear-gradient(
+          90deg,
+          rgb(10 11 12 / 0.96) 0%,
+          rgb(10 11 12 / 0.82) 30%,
+          rgb(10 11 12 / 0.34) 54%,
+          rgb(10 11 12 / 0.06) 78%
+        ),
+        linear-gradient(0deg, rgb(10 11 12 / 0.2), transparent 42%);
+    }
+
+    .process__copy {
+      z-index: 2;
+      align-self: center;
+      width: min(64%, 54rem);
+      padding: clamp(3rem, 6vw, 5.5rem);
+    }
+
+    .process__caption {
+      top: 1.25rem;
+      right: 1.25rem;
+    }
+
+    .process__steps {
+      margin-top: -4rem;
+    }
+  }
+</style>

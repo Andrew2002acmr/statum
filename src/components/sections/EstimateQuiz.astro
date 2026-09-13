@@ -5,7 +5,6 @@ import {
 } from "../../data/estimate-quiz";
 import LeadForm from "../forms/LeadForm.astro";
 import Container from "../ui/Container.astro";
-import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
 import QuizOption from "../ui/QuizOption.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
 ---
@@ -30,18 +29,6 @@ import SectionHeading from "../ui/SectionHeading.astro";
             theme="dark"
             id="estimate-title"
           />
-
-          <div
-            class="mt-8 overflow-hidden rounded-[var(--radius-md)] border border-white/10 bg-white/[0.04] p-3 shadow-[var(--shadow-strong)]"
-            data-estimate-visual
-          >
-            <ImagePlaceholder
-              label={estimateQuizContent.visualLabel}
-              ratio="4 / 3"
-              decorative
-              className="border-white/10 bg-[linear-gradient(135deg,rgb(255_255_255_/_0.16),rgb(204_141_28_/_0.08))]"
-            />
-          </div>
         </div>
 
         <div
@@ -199,10 +186,6 @@ import SectionHeading from "../ui/SectionHeading.astro";
     [data-estimate-section][data-complete="true"] [data-estimate-quiz] {
       grid-column: 1 / -1;
     }
-  }
-
-  [data-estimate-section][data-complete="true"] [data-estimate-visual] {
-    display: none;
   }
 </style>
 

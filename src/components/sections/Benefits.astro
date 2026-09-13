@@ -1,7 +1,9 @@
 ---
 import { benefits } from "../../data/benefits";
+import { preparedAssets } from "../../data/assets";
 import BenefitCard from "../ui/BenefitCard.astro";
 import Container from "../ui/Container.astro";
+import ResponsiveImage from "../ui/ResponsiveImage.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
 ---
 
@@ -12,20 +14,153 @@ import SectionHeading from "../ui/SectionHeading.astro";
 >
   <Container>
     <div class="py-[var(--section-space-md)]">
-      <SectionHeading
-        eyebrow="Почему выбирают нас"
-        title="Контроль без громких обещаний"
-        description="Блок преимуществ временно фиксирует подход к работе, а не неподтверждённые цифры, гарантии или абсолютные обещания."
-        theme="dark"
-        align="center"
-        id="benefits-title"
-      />
+      <div class="benefits__visual">
+        <ResponsiveImage
+          alt="Тёмная кухня-гостиная готовой квартиры на фоне архитектурной схемы проекта"
+          className="benefits__image"
+          desktop={preparedAssets.benefits}
+          desktopSizes="(min-width: 1280px) min(100vw - 5rem, 1500px), calc(100vw - 2rem)"
+        />
+        <div aria-hidden="true" class="benefits__shade"></div>
+        <div class="benefits__copy">
+          <SectionHeading
+            eyebrow="Почему выбирают нас"
+            title="Контроль без громких обещаний"
+            description="Процесс строится на согласованных решениях, аккуратной организации и понятных точках проверки результата."
+            theme="dark"
+            id="benefits-title"
+          />
+        </div>
+        <p class="benefits__label">Интерьерная визуализация</p>
+      </div>
 
       <div
-        class="mt-10 grid overflow-hidden rounded-[var(--radius-md)] border border-white/10 bg-white/[0.03] md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+        class="benefits__cards grid overflow-hidden rounded-[var(--radius-md)] border border-white/10 bg-white/[0.03] shadow-[var(--shadow-strong)] md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
       >
         {benefits.map((benefit) => <BenefitCard {...benefit} />)}
       </div>
     </div>
   </Container>
 </section>
+
+<style>
+  .benefits__visual {
+    position: relative;
+    isolation: isolate;
+    min-height: clamp(24rem, 36vw, 34rem);
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: var(--radius-md);
+    background: rgb(0 0 0 / 0.28);
+  }
+
+  :global(.benefits__image) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+  }
+
+  :global(.benefits__image img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .benefits__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      90deg,
+      rgb(8 10 11 / 0.9) 0%,
+      rgb(8 10 11 / 0.75) 34%,
+      rgb(8 10 11 / 0.24) 60%,
+      rgb(8 10 11 / 0.06) 100%
+    );
+  }
+
+  .benefits__copy {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    min-height: inherit;
+    max-width: min(43rem, 54%);
+    align-items: center;
+    padding: clamp(1.5rem, 4.5vw, 4.5rem);
+  }
+
+  .benefits__label {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    margin: 0;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: 999px;
+    background: rgb(8 10 11 / 0.68);
+    padding: 0.35rem 0.65rem;
+    color: rgb(255 255 255 / 0.76);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .benefits__cards {
+    position: relative;
+    z-index: 3;
+    margin-top: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .benefits__cards {
+      margin-top: -2.5rem;
+      margin-inline: clamp(1rem, 3vw, 3.5rem);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .benefits__visual {
+      min-height: 0;
+      overflow: visible;
+      background: rgb(var(--color-surface-dark));
+    }
+
+    :global(.benefits__image) {
+      position: relative;
+      height: clamp(16rem, 65vw, 22rem);
+      overflow: hidden;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    :global(.benefits__image img) {
+      object-position: 76% center;
+    }
+
+    .benefits__shade {
+      inset: 0 0 auto;
+      height: clamp(16rem, 65vw, 22rem);
+      background: linear-gradient(
+        180deg,
+        rgb(8 10 11 / 0.08) 0%,
+        rgb(8 10 11 / 0.45) 100%
+      );
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    .benefits__copy {
+      min-height: 0;
+      max-width: none;
+      padding: 1.5rem;
+    }
+
+    .benefits__label {
+      top: 0.75rem;
+      right: 0.75rem;
+    }
+  }
+</style>

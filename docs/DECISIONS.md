@@ -1,5 +1,17 @@
 # DECISIONS
 
+## 2026-09-09 - Process uses an organized-renovation visualization
+
+- Decision: the Process section uses the approved Nano Banana Pro 21:9 panorama with a dedicated 4:3 mobile crop. `[Brief]` `[Materials]`
+- Layout: desktop copy overlays the calm left side, five semantic step cards overlap the lower image edge; mobile keeps copy and media sequential for readability. Compact 24–40 px outer padding and a 432–512 px desktop media height remove excessive empty space around the composition. `[Brief]` `[Technical recommendation]`
+- Disclosure: the section visibly labels the generated scene «Интерьерная визуализация». `[Technical recommendation]`
+
+## 2026-09-09 - Hero and About use the selected visualizations
+
+- Decision: Hero uses the user-selected `design/Hero.png`; the source is copied into `src/assets/images/hero/` and a dedicated 4:3 mobile crop is used below 640 px. `[Brief]` `[Materials]` `[Technical recommendation]`
+- Decision: About uses `src/assets/images/generated/about-real-renovation.webp` instead of the shower detail. `[Brief]` `[Materials]`
+- Disclosure: both generated interiors display the visible label «Интерьерная визуализация» and are not presented as documentary portfolio work. `[Technical recommendation]`
+
 ## 2026-07-21 - Hero uses the approved interior image
 
 - Decision: Hero uses `src/assets/images/hero/hero-main.png` through Astro `Picture` as a full-width decorative media layer. Astro generates responsive AVIF and WebP sources with intrinsic dimensions, eager loading, and high fetch priority because the image is an LCP candidate. `[Brief]` `[Materials]` `[Technical recommendation]`

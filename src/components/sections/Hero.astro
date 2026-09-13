@@ -1,27 +1,27 @@
 ---
-import { Picture } from "astro:assets";
 import { ArrowRight, CircleCheck } from "@lucide/astro";
-import heroImage from "../../assets/images/hero/hero-main.png";
+import { preparedAssets } from "../../data/assets";
 import { site } from "../../data/site";
 import LeadForm from "../forms/LeadForm.astro";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
+import ResponsiveImage from "../ui/ResponsiveImage.astro";
 ---
 
 <section class="hero" id="hero" aria-labelledby="hero-title">
-  <div class="hero__media" aria-hidden="true">
-    <Picture
+  <div class="hero__media">
+    <ResponsiveImage
       alt=""
-      class="hero__picture"
-      data-testid="hero-image"
-      decoding="async"
-      fetchpriority="high"
-      formats={["avif", "webp"]}
+      className="hero__picture"
+      dataTestId="hero-image"
+      desktop={preparedAssets.hero.desktop}
+      desktopSizes="100vw"
       loading="eager"
-      sizes="(min-width: 1200px) 100vw, 100vw"
-      src={heroImage}
-      widths={[390, 768, 1024, 1440, 1672]}
+      mobile={preparedAssets.hero.mobile}
+      mobileSizes="100vw"
+      priority
     />
+    <span class="hero__visualization-label">Интерьерная визуализация</span>
   </div>
   <div class="hero__shade" aria-hidden="true"></div>
 
@@ -117,6 +117,24 @@ import Container from "../ui/Container.astro";
   .hero__media :global(img) {
     object-fit: cover;
     object-position: 50% 50%;
+  }
+
+  .hero__visualization-label {
+    position: absolute;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: 1rem;
+    z-index: 2;
+    padding: 0.4rem 0.65rem;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: var(--radius-sm);
+    background: rgb(12 14 15 / 0.72);
+    color: rgb(255 255 255 / 0.78);
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    backdrop-filter: blur(0.3rem);
   }
 
   .hero__shade {
@@ -360,7 +378,7 @@ import Container from "../ui/Container.astro";
     }
 
     h1 {
-      font-size: clamp(2.35rem, 12vw, 3.15rem);
+      font-size: clamp(2.25rem, 11vw, 3.15rem);
       line-height: 1;
     }
 

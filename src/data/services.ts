@@ -1,48 +1,30 @@
-// TBD: exact service list, scope and wording must be confirmed by the client.
+import { preparedAssets } from "./assets";
+
+// Только направления, для которых есть соответствующие реальные кадры.
+// Фото домов и черновых работ нужны до добавления этих услуг в карточки.
 export const services = [
   {
     id: "apartment-renovation",
     title: "Ремонт квартир",
     description: "Обновление комнат, кухни, санузла или всей квартиры.",
-    image: "service-apartment",
-    imageAspectRatio: "16 / 11",
-    alt: "TBD: пример ремонта квартиры",
+    image: preparedAssets.services.apartment,
+    alt: "Комната на стадии отделки с окном, радиатором и стеной с графическим рисунком",
     icon: "Sofa",
-  },
-  {
-    id: "house-finishing",
-    title: "Отделка домов",
-    description: "Отделка частного дома с понятной последовательностью работ.",
-    image: "service-house",
-    imageAspectRatio: "16 / 11",
-    alt: "TBD: пример отделки дома",
-    icon: "House",
-  },
-  {
-    id: "rough-works",
-    title: "Черновые работы",
-    description: "Подготовка поверхностей, инженерные и базовые работы.",
-    image: "service-rough",
-    imageAspectRatio: "16 / 11",
-    alt: "TBD: пример черновых работ",
-    icon: "PaintRoller",
   },
   {
     id: "finish-works",
     title: "Чистовая отделка",
     description: "Финишные покрытия, монтаж и аккуратные детали.",
-    image: "service-finish",
-    imageAspectRatio: "16 / 11",
-    alt: "TBD: пример чистовой отделки",
+    image: preparedAssets.services.finish,
+    alt: "Стена с графическим рисунком, подвесами и чистовой отделкой",
     icon: "PanelsTopLeft",
   },
   {
     id: "specific-repairs",
     title: "Отдельные работы",
     description: "Точечные задачи без перестройки всего ремонта.",
-    image: "service-specific",
-    imageAspectRatio: "16 / 11",
-    alt: "TBD: пример отдельной ремонтной работы",
+    image: preparedAssets.services.specific,
+    alt: "Чёрная душевая фурнитура и ниша со стеклянными полками",
     icon: "Wrench",
   },
 ] as const;

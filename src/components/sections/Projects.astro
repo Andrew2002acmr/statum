@@ -5,14 +5,6 @@ import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import ProjectCard from "../ui/ProjectCard.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
-
-const placeholderClasses = [
-  "bg-[linear-gradient(135deg,rgb(17_19_21_/_0.12),rgb(255_255_255_/_0.84)_44%,rgb(var(--color-accent)_/_0.18))]",
-  "bg-[linear-gradient(135deg,rgb(var(--color-accent)_/_0.16),rgb(255_255_255_/_0.82)_48%,rgb(17_19_21_/_0.08))]",
-  "bg-[linear-gradient(145deg,rgb(17_19_21_/_0.1),rgb(247_246_243)_52%,rgb(var(--color-border)))]",
-  "bg-[linear-gradient(135deg,rgb(255_255_255_/_0.86),rgb(var(--color-accent)_/_0.12)_52%,rgb(17_19_21_/_0.1))]",
-  "bg-[linear-gradient(145deg,rgb(var(--color-border)),rgb(255_255_255_/_0.86)_50%,rgb(var(--color-accent)_/_0.14))]",
-];
 ---
 
 <section
@@ -25,8 +17,8 @@ const placeholderClasses = [
       <div class="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_auto] lg:items-end">
         <SectionHeading
           eyebrow="Работы"
-          title="Проекты, которые покажут подход"
-          description="Пока реальные фотографии и описания не подтверждены, секция фиксирует будущую структуру портфолио без адресов, цен, сроков и других неподтверждённых фактов."
+          title="Реальные детали выполненных работ"
+          description="Фотографии показывают отделку и узлы без сгенерированных интерьеров. Названия описывают видимый фрагмент; сведения об объектах уточняются отдельно."
           id="projects-title"
         />
         <Button
@@ -41,16 +33,14 @@ const placeholderClasses = [
         </Button>
       </div>
 
-      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-12">
+      <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
         {
-          projects.map((project, index) => (
+          projects.map((project) => (
             <ProjectCard
               title={project.title}
               category={project.category}
-              imageAspectRatio={project.imageAspectRatio}
-              imageLabel={project.alt}
-              featured={project.featured}
-              placeholderClassName={placeholderClasses[index]}
+              image={project.image}
+              alt={project.alt}
             />
           ))
         }

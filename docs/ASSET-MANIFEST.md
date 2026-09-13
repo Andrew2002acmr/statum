@@ -1,5 +1,33 @@
 # ASSET-MANIFEST
 
+## 2026-09-13 — визуализация Benefits
+
+| ID                         | Section  | Production file                                                                | Ratio      | Status                                          | Source                         |
+| -------------------------- | -------- | ------------------------------------------------------------------------------ | ---------- | ----------------------------------------------- | ------------------------------ |
+| `benefits-project-control` | Benefits | `src/assets/images/generated/benefits/benefits-project-control.png`           | `1915:821` | integrated; user-provided interior visualization | `[Бриф]` `[Материалы]`         |
+
+Визуализация маркируется в интерфейсе и не считается документальной фотографией выполненного объекта. `[Бриф]` `[Рекомендация]`
+
+## 2026-09-09 — выбранные визуализации
+
+| ID                         | Section | Production file                                                        | Ratio      | Status                              | Source                         |
+| -------------------------- | ------- | ---------------------------------------------------------------------- | ---------- | ----------------------------------- | ------------------------------ |
+| `hero-approved`            | Hero    | `src/assets/images/hero/hero-approved.png`                             | `1671:941` | integrated; desktop                 | `[Бриф]` `[Материалы]`         |
+| `hero-approved-mobile`     | Hero    | `src/assets/images/hero/hero-approved-mobile.webp`                     | `4:3`      | integrated; mobile crop             | `[Материалы]` `[Рекомендация]` |
+| `about-real-renovation`    | About   | `src/assets/images/generated/about-real-renovation.webp`               | `4:3`      | integrated; generated visualization | `[Бриф]` `[Материалы]`         |
+| `process-organized`        | Process | `src/assets/images/generated/process-organized-renovation.webp`        | `21:9`     | integrated; generated visualization | `[Бриф]` `[Материалы]`         |
+| `process-organized-mobile` | Process | `src/assets/images/generated/process-organized-renovation-mobile.webp` | `4:3`      | integrated; mobile crop             | `[Материалы]` `[Рекомендация]` |
+
+`design/Hero.png` и исходная 4K-генерация процесса сохранены без изменений. Генеративные сцены маркируются в интерфейсе как интерьерные визуализации и не считаются документальными фотографиями выполненных объектов. `[Бриф]` `[Рекомендация]`
+
+## 2026-09-08 — подготовленные реальные фотографии
+
+Подготовлены 32 WebP из 10 исходников в `src/assets/images/prepared/`: Hero desktop/mobile, пять карточек портфолио 3:4, услуги, детали, рабочая стадия, декоративные CTA и полные версии. Подробный реестр: [design/image-manifest.md](../design/image-manifest.md). Все результаты получены обычной обработкой; генерация не применялась. Статус: **integrated through Astro image pipeline**. `[Бриф]` `[Материалы]`
+
+Hero подключает отдельные desktop/mobile кропы с `fetchpriority="high"`; секции ниже Hero используют lazy loading и адаптивные AVIF/WebP-варианты. Старые `public/images/placeholders/*` не являются путями новых ассетов; текущий `hero-main.png` больше не является изображением первого экрана. `[Материалы]` `[Рекомендация]`
+
+Ниже сохранён исторический реестр прежних подключённых файлов и заглушек. Старые `public/images/placeholders/*` не являются путями новых ассетов и не используются текущими секциями. `[Материалы]` `[Рекомендация]`
+
 ## Stage 5 additions
 
 | ID                   | Section      | Purpose                                           | Proposed file                               | Ratio | Desktop/mobile notes                                                                               | Alt/decorative                                        | Status      |

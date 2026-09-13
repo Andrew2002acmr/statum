@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-08",
+  "stage": "image-preparation-only",
+  "result": "pass",
+  "outputs": 32,
+  "source_photos": 10,
+  "ordinary_outputs": 32,
+  "generative_outputs": 0,
+  "asset_bytes": 8394716,
+  "original_and_code_hashes_unchanged": true,
+  "baseline_files": 127,
+  "baseline_unchanged_files": 126,
+  "allowed_baseline_document_update": ["design/image-audit.md"],
+  "checked": [
+    "32 WebP files decode in Pillow; RGB, embedded sRGB, declared dimensions",
+    "manifest contains every input and output path",
+    "crop rectangles are inside source canvas; no upscaling",
+    "per-file SHA256 matches processing-recipes.json",
+    "all 32 exports viewed on three sheets; 10 inputs compared to chosen outputs; final bath and niche crops viewed individually",
+    "original design photos, SVGs, prepared source materials and existing src/public/root files retain baseline SHA256",
+    "text-safe CTA contrast: desktop 8.41:1, mobile 5.31:1 for #EEEAE2 in declared rectangles"
+  ],
+  "not_run": [
+    "landing build, astro check, ESLint and browser E2E: no code changes or image integration"
+  ],
+  "formatting": "PASS — npm run format:check, exit code 0",
+  "source_sha256": {
+    "IMG_20220801_164013.jpg": "f63cd5e62cb939020f3ed8df6b4a66c1c981c9642f38210f8a1248b4d65c34ca",
+    "IMG_20220321_161406.jpg": "9faa8ac92f851f4d2bdb7f8a38d598c2584a3b796551c2ccac1bea3fd3e07a81",
+    "IMG_20220801_154610.jpg": "d7f662de123cef70a27ad6da72e0eb648c5d88ddbfc907fc66d8888f5cb47951",
+    "IMG_20210924_173446.jpg": "0dae15c81f95c03d3013aa9824634ebfbf351050ce4a06c05c3be963627c2492",
+    "IMG_20220321_005848.jpg": "58a21b18af39fdbafed93376a812231f9e324501a8f3abf062f0e09d5fb926ea",
+    "IMG_20220321_161443.jpg": "e818a3e5a887f21b0d3e3763171c04e747a6e5934834e8e82884f8f3519d9b28",
+    "IMG_20220321_161419.jpg": "1eab78fd457cc591c79b29c7fe5dac8869bd6d4bc49e0d17cb497eed01873189",
+    "IMG_20220801_154642.jpg": "8dd3dd6a65007b82249ea23c5b063d84e2bfeaab4792e417a15370a356b7a7d1",
+    "IMG_20220321_005824.jpg": "4852b64102fc0c9a27a0f423aaf066257a0c93f65b65334848a689d7a0d865ae",
+    "IMG_20220321_005829.jpg": "2ded0495516d4a55d04beb675490f6570f1600ff1810864fc3afe156cf17026c"
+  },
+  "git_diff_check": "PASS — git diff --check"
+}

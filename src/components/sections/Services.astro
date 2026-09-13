@@ -18,7 +18,7 @@ import ServiceCard from "../ui/ServiceCard.astro";
         <SectionHeading
           eyebrow="Услуги"
           title="Работы под разные задачи ремонта"
-          description="Временная структура помогает показать основные направления без неподтверждённых цен, сроков и фиксированного состава работ."
+          description="Показываем направления, для которых есть реальные фотографии. Точный состав работ, сроки и стоимость согласуются по задаче."
           id="services-title"
         />
         <Button
@@ -32,16 +32,14 @@ import ServiceCard from "../ui/ServiceCard.astro";
         </Button>
       </div>
 
-      <div
-        class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
-      >
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {
           services.map((service) => (
             <ServiceCard
               title={service.title}
               description={service.description}
-              imageAspectRatio={service.imageAspectRatio}
-              imageLabel={service.alt}
+              image={service.image}
+              alt={service.alt}
               icon={service.icon}
             />
           ))

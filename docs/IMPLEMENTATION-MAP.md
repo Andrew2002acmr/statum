@@ -1,5 +1,22 @@
 # IMPLEMENTATION-MAP
 
+## Benefits visual integration note — 2026-09-13
+
+- `Benefits.astro` использует пользовательскую панорамную визуализацию через `preparedAssets.benefits`. Desktop-композиция размещает текст на затемнённой левой части кадра и немного объединяет медиа с карточками; mobile отделяет текст от кадра и сдвигает кроп вправо. `[Бриф]` `[Материалы]` `[Technical recommendation]`
+- Маркировка «Интерьерная визуализация» является частью блока, поэтому изображение не выдаётся за документальную съёмку выполненного объекта. `[Recommendation]`
+
+## Process visual integration note
+
+- `Process.astro` uses a generated 21:9 desktop panorama and a 4:3 mobile crop through the shared responsive image pipeline. The desktop heading overlays the calm left side, while mobile keeps heading and image sequential. `[Brief]` `[Materials]` `[Technical recommendation]`
+- The five steps are rendered as an ordered list and visually overlap the desktop panorama to remove unused space without changing the page section order or content data contract. `[Technical recommendation]`
+- The image is visibly disclosed as an interior visualization and remains separate from documentary portfolio imagery. `[Technical recommendation]`
+
+## Stage 8 implementation note
+
+- `src/data/assets.ts` централизует импорты подготовленных реальных фотографий из `src/assets/images/prepared/`; `src/components/ui/ResponsiveImage.astro` формирует responsive AVIF/WebP `picture` через Astro assets. `[Материалы]` `[Technical recommendation]`
+- Hero использует отдельные 16:9/4:3 версии с `fetchpriority="high"`; остальная медиа-зона имеет native lazy loading, явные intrinsic dimensions и CSS ratio, чтобы не создавать заметные скачки макета. `[Материалы]` `[Technical recommendation]`
+- `Projects`, `Services`, `About`, `Benefits`, `Process` и `FinalCta` подключают материалы по предыдущему аудиту. Его рекомендации об отказе от генерации не утверждены: новый premium pilot рассматривается отдельно и пока не подключён к сайту. Пять карточек проектов описывают видимые детали, а не неподтверждённые объекты; декоративный CTA не считается портфолио. `[Бриф]` `[Материалы]` `[Предположение/TBD]`
+
 ## Stage 7 implementation note
 
 - Lead submission path: `LeadForm -> Astro Action submitLead -> Zod validation -> honeypot -> Turnstile siteverify -> in-memory rate limit -> message formatter -> Telegram Bot API sendMessage`. `[Brief]` `[Technical recommendation]`

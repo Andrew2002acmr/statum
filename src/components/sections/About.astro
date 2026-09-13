@@ -1,8 +1,9 @@
 ---
 import { CircleCheck } from "@lucide/astro";
 import { about } from "../../data/about";
+import { preparedAssets } from "../../data/assets";
 import Container from "../ui/Container.astro";
-import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
+import ResponsiveImage from "../ui/ResponsiveImage.astro";
 import SectionHeading from "../ui/SectionHeading.astro";
 ---
 
@@ -49,11 +50,17 @@ import SectionHeading from "../ui/SectionHeading.astro";
 
       <div class="lg:order-first">
         <div class="relative">
-          <ImagePlaceholder
-            decorative
-            ratio="4 / 3"
-            className="rounded-[var(--radius-sm)] border-solid bg-[linear-gradient(135deg,rgb(17_19_21_/_0.08),rgb(255_255_255_/_0.72)_42%,rgb(var(--color-accent)_/_0.12))] shadow-[var(--shadow-soft)]"
+          <ResponsiveImage
+            alt="Интерьер кухни-гостиной с полноценной системой хранения"
+            className="about__image"
+            desktop={preparedAssets.about}
+            desktopSizes="(min-width: 1024px) calc((min(100vw - 5rem, 1500px) - 4rem) / 2), calc(100vw - 2rem)"
           />
+          <span
+            class="absolute bottom-4 left-4 rounded-[var(--radius-sm)] border border-white/20 bg-black/65 px-3 py-2 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-white/80 backdrop-blur-sm"
+          >
+            Интерьерная визуализация
+          </span>
           <div
             aria-hidden="true"
             class="absolute -bottom-5 right-5 h-20 w-1 bg-[rgb(var(--color-accent))] sm:right-8"
@@ -64,3 +71,22 @@ import SectionHeading from "../ui/SectionHeading.astro";
     </div>
   </Container>
 </section>
+
+<style>
+  .about__image {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: rgb(var(--color-surface-dark));
+    box-shadow: var(--shadow-soft);
+  }
+
+  .about__image :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+  }
+</style>

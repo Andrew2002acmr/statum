@@ -1,0 +1,111 @@
+---
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+export interface Props {
+  alt: string;
+  className?: string;
+  dataTestId?: string;
+  desktop: ImageMetadata;
+  desktopSizes: string;
+  loading?: "eager" | "lazy";
+  mobile?: ImageMetadata;
+  mobileSizes?: string;
+  priority?: boolean;
+}
+
+const {
+  alt,
+  className = "",
+  dataTestId,
+  desktop,
+  desktopSizes,
+  loading = "lazy",
+  mobile,
+  mobileSizes = "100vw",
+  priority = false,
+} = Astro.props as Props;
+
+const desktopWidths = [320, 480, 640, 960, 1280, 1920].filter(
+  (width) => width <= desktop.width,
+);
+const mobileWidths = mobile
+  ? [320, 480, 640, 960, 1200].filter((width) => width <= mobile.width)
+  : [];
+
+const [desktopAvif, desktopWebp, mobileAvif, mobileWebp] = await Promise.all([
+  getImage({
+    src: desktop,
+    widths: desktopWidths,
+    format: "avif",
+    quality: "high",
+  }),
+  getImage({
+    src: desktop,
+    widths: desktopWidths,
+    format: "webp",
+    quality: "high",
+  }),
+  mobile
+    ? getImage({
+        src: mobile,
+        widths: mobileWidths,
+        format: "avif",
+        quality: "high",
+      })
+    : undefined,
+  mobile
+    ? getImage({
+        src: mobile,
+        widths: mobileWidths,
+        format: "webp",
+        quality: "high",
+      })
+    : undefined,
+]);
+---
+
+<picture class={className} data-testid={dataTestId}>
+  {
+    mobileAvif && (
+      <source
+        media="(max-width: 639px)"
+        sizes={mobileSizes}
+        srcset={mobileAvif.srcSet.attribute}
+        type="image/avif"
+      />
+    )
+  }
+  {
+    mobileWebp && (
+      <source
+        media="(max-width: 639px)"
+        sizes={mobileSizes}
+        srcset={mobileWebp.srcSet.attribute}
+        type="image/webp"
+      />
+    )
+  }
+  <source
+    sizes={desktopSizes}
+    srcset={desktopAvif.srcSet.attribute}
+    type="image/avif"
+  />
+  <source
+    sizes={desktopSizes}
+    srcset={desktopWebp.srcSet.attribute}
+    type="image/webp"
+  />
+  <img
+    alt={alt}
+    data-testid={dataTestId}
+    decoding="async"
+    fetchpriority={priority ? "high" : "auto"}
+    height={desktop.height}
+    loading={loading}
+    sizes={desktopSizes}
+    src={desktopWebp.src}
+    srcset={desktopWebp.srcSet.attribute}
+    width={desktop.width}
+  />
+</picture>

@@ -1,15 +1,27 @@
 ---
 import { ArrowRight } from "@lucide/astro";
+import { preparedAssets } from "../../data/assets";
 import { finalCta } from "../../data/final-cta";
 import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
+import ResponsiveImage from "../ui/ResponsiveImage.astro";
 ---
 
 <section
   aria-labelledby="contact-title"
-  class="border-b border-white/10 bg-[rgb(var(--color-surface-dark))] text-white"
+  class="final-cta border-b border-white/10 bg-[rgb(var(--color-surface-dark))] text-white"
   id="contact"
 >
+  <div aria-hidden="true" class="final-cta__media">
+    <ResponsiveImage
+      alt=""
+      className="final-cta__picture"
+      desktop={preparedAssets.cta.desktop}
+      desktopSizes="100vw"
+      mobile={preparedAssets.cta.mobile}
+      mobileSizes="100vw"
+    />
+  </div>
   <Container>
     <div
       class="grid gap-8 py-[var(--section-space-sm)] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center"
@@ -48,3 +60,29 @@ import Container from "../ui/Container.astro";
     </div>
   </Container>
 </section>
+
+<style>
+  .final-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .final-cta__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .final-cta__picture,
+  .final-cta__picture :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .final-cta__picture :global(img) {
+    object-fit: cover;
+    object-position: center;
+  }
+</style>

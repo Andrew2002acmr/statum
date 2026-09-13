@@ -26,6 +26,27 @@ async function expectServiceCardTextFits(page: Page) {
   expect(overflowingText).toBe(false);
 }
 
+async function expectImagesLoaded(page: Page, selector: string) {
+  const images = page.locator(selector);
+  const count = await images.count();
+
+  for (let index = 0; index < count; index += 1) {
+    const image = images.nth(index);
+
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (node) =>
+            node instanceof HTMLImageElement &&
+            node.complete &&
+            node.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+}
+
 async function expectQuizProgress(page: Page, expectedValue: number) {
   const progressValue = await page
     .locator("[data-quiz-progress]")
@@ -109,7 +130,7 @@ for (const viewport of viewports) {
     await expect(page.locator("#contact")).toBeVisible();
     await expect(page.locator("footer")).toBeVisible();
     await expect(page.locator("[data-process-step]")).toHaveCount(5);
-    await expect(page.locator("[data-service-card]")).toHaveCount(5);
+    await expect(page.locator("[data-service-card]")).toHaveCount(3);
     await expect(page.locator("[data-benefit-card]")).toHaveCount(5);
     await expect(page.locator("[data-project-card]")).toHaveCount(5);
     await expect(page.locator("[data-statistic-item]")).toHaveCount(4);
@@ -219,12 +240,14 @@ for (const viewport of viewports) {
       ),
     });
 
+    await expectImagesLoaded(page, "#process img");
     await page.locator("#process").screenshot({
       path: testInfo.outputPath(
         `process-${viewport.width}x${viewport.height}.png`,
       ),
     });
 
+    await expectImagesLoaded(page, "#services img");
     await page.locator("#services").screenshot({
       path: testInfo.outputPath(
         `services-${viewport.width}x${viewport.height}.png`,
@@ -241,12 +264,14 @@ for (const viewport of viewports) {
     await expectServiceCardTextFits(page);
     await expectNoHorizontalOverflow(page);
 
+    await expectImagesLoaded(page, "#benefits img");
     await page.locator("#benefits").screenshot({
       path: testInfo.outputPath(
         `benefits-${viewport.width}x${viewport.height}.png`,
       ),
     });
 
+    await expectImagesLoaded(page, "#projects img");
     await page.locator("#projects").screenshot({
       path: testInfo.outputPath(
         `projects-${viewport.width}x${viewport.height}.png`,
